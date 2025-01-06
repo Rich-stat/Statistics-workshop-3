@@ -1,0 +1,2531 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistics Workshop 3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Stats_Workshop3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Stats_Workshop3_files/libs/quarto-html/quarto.js"></script>
+<script src="Stats_Workshop3_files/libs/quarto-html/popper.min.js"></script>
+<script src="Stats_Workshop3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Stats_Workshop3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Stats_Workshop3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Stats_Workshop3_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Stats_Workshop3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Stats_Workshop3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Stats_Workshop3_files/libs/bootstrap/bootstrap-d5ac29a56adf641187225d49675c3d41.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Statistics Workshop 3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="testing-for-relationships-between-variables" class="level2 tabset">
+<h2 class="tabset anchored" data-anchor-id="testing-for-relationships-between-variables">Testing for Relationships between Variables</h2>
+<p>This workshop introduces you to analysing:</p>
+<ul>
+<li>Correlations: analysing the strength of an association;<br></li>
+<li>Linear Regression for two variables: analyzing the relationship or influence of one variable (predictor or independent) on another (dependent);<br></li>
+<li>Multiple Regression: analyzing the influence of more than one predictor variable on a dependent variable.</li>
+</ul>
+<p>First, open RStudio and a new R Script file. Load the packages that you will be using:</p>
+<div class="callout callout-style-simple callout-important callout-titled" title="Click to see packages to load (Copy and paste to Script editor)">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see packages to load (Copy and paste to Script editor)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pastecs)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p><br><strong>SELECT THE RELEVANT TAB BELOW FOR YOUR DATA</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href=""><strong>CORRELATION</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href=""><strong>REGRESSION (BIVARIATE)</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href=""><strong>REGRESSION (MULTIPLE)</strong></a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="callout callout-style-default callout-tip callout-titled" title="Click to read the Introduction">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to read the Introduction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This example analyzes the strength of an association between two variables measured in 19 different people: LDL Cholesterol levels and Triglycerides. Correlations can be carried out for more than just two variables, and a second example correlates the strength of the association between 3 variables: Triglycerides, LDL Cholesterol and Glucose.</p>
+</div>
+</div>
+</div>
+<p><br> <strong>A. CORRELATION OF TWO VARIABLES</strong><br> <strong>1. Download the Excel file <em>Correlation_2_var_data.xlsx</em> from Canvas and save it to a folder that you will use as your working directory.</strong><br></p>
+<p>In RStudio, locate the file and set that location as your working directory.</p>
+<p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>corr2var</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>corr2var <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Correlation_2_var_data.xlsx"</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(corr2var) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>corr2var <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-5" class="code-annotation-target"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(class)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">Imports the excel file to a dataframe object callsed ‘corr2var’</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="2">Shows the first 6 rows of the dataframe</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="5" data-code-annotation="3">Shows the types of data in each column</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The first 6 rows:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Triglycerides</th>
+<th style="text-align: left;">LDL_Cholesterol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">123</td>
+<td style="text-align: left;">107</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">132</td>
+<td style="text-align: left;">110</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">135</td>
+<td style="text-align: left;">112</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">145</td>
+<td style="text-align: left;">117</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">147</td>
+<td style="text-align: left;">118</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">149</td>
+<td style="text-align: left;">119</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The types of data in the two columns:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Triglycerides</th>
+<th style="text-align: left;">LDL_Cholesterol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">numeric</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><br><strong>3. Explore the data:</strong><br>(a) get the descriptive statistics<br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>corr2var <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">describe</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 4%">
+<col style="width: 2%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 5%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">vars</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">median</th>
+<th style="text-align: right;">trimmed</th>
+<th style="text-align: right;">mad</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">range</th>
+<th style="text-align: right;">skew</th>
+<th style="text-align: right;">kurtosis</th>
+<th style="text-align: right;">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">159.9474</td>
+<td style="text-align: right;">21.27981</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">159.7647</td>
+<td style="text-align: right;">19.2738</td>
+<td style="text-align: right;">123</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.2831225</td>
+<td style="text-align: right;">-0.8907746</td>
+<td style="text-align: right;">4.881924</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LDL_Cholesterol</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">128.0526</td>
+<td style="text-align: right;">12.94636</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">127.8824</td>
+<td style="text-align: right;">13.3434</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0.2032734</td>
+<td style="text-align: right;">-0.9891948</td>
+<td style="text-align: right;">2.970098</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>(b) test if the data is normally distributed</strong><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>corr2var <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides, LDL_Cholesterol) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">statistic</th>
+<th style="text-align: left;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">LDL_Cholesterol</td>
+<td style="text-align: left;">0.9725392</td>
+<td style="text-align: left;">0.8258618</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: left;">0.9671358</td>
+<td style="text-align: left;">0.7180749</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>This data is normally distributed (P&gt;0.05 for both variables) and so we can use Pearson’s r coefficient.</p>
+</div>
+</div>
+</div>
+<p><br><br> <strong>4. Produce a scatter plot to see if the data seems to form a linear relationship</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>corr2var <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Triglycerides, LDL_Cholesterol)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatter plot of Triglycerides vs LDL Cholesterol"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"LDL Cholesterol (mg/dL)"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Triglycerides (mg/dL)"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the scatter plot">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the scatter plot
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/scatter%20corr2a-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><br><br> <strong>5. The correlation</strong><br> <em>NB</em> If at least one of the variables is NOT normally distributed, use <code>method = "spearman"</code> in the script below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>corr2var <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor_test</span>(Triglycerides, LDL_Cholesterol, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 21%">
+<col style="width: 6%">
+<col style="width: 13%">
+<col style="width: 3%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">var1</th>
+<th style="text-align: left;">var2</th>
+<th style="text-align: right;">cor</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+<th style="text-align: left;">method</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: left;">LDL_Cholesterol</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">29.14902</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.9739525</td>
+<td style="text-align: right;">0.9962893</td>
+<td style="text-align: left;">Pearson</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Here, the correlation coefficient r = 0.99, so a very strong correlation (almost 100%). The Statistical significance of this is P &lt;&lt;0.001, so highly significant.</p>
+</div>
+</div>
+</div>
+<p><br> <br> <br> <strong>B. CORRELATION OF THREE VARIABLES</strong><br> <strong>1. Download the Excel file <em>Correlation_3_var_data.xlsx</em> from Canvas and save it to the same folder as above so that it is in your working directory.</strong></p>
+<p>In RStudio, locate the file and set that location as your working directory. <br><br><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>corr3var</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. All three columns contain numeric which is what we want.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>corr3var <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Correlation_3_var_data.xlsx"</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2">2</button><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(corr3var) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-7-3"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span>
+<span id="annotated-cell-7-4"><a href="#annotated-cell-7-4" aria-hidden="true" tabindex="-1"></a>corr3var <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="3">3</button><span id="annotated-cell-7-5" class="code-annotation-target"><a href="#annotated-cell-7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(class)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="1" data-code-annotation="1">Imports the excel file to a dataframe object callsed ‘corr3var’</span>
+</dd>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="2" data-code-annotation="2">Shows the first 6 rows of the dataframe</span>
+</dd>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="5" data-code-annotation="3">Shows the types of data in each column</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The first 6 rows:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Triglycerides</th>
+<th style="text-align: left;">LDL_Cholesterol</th>
+<th style="text-align: left;">Glucose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">123</td>
+<td style="text-align: left;">107</td>
+<td style="text-align: left;">124</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">132</td>
+<td style="text-align: left;">110</td>
+<td style="text-align: left;">132</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">135</td>
+<td style="text-align: left;">112</td>
+<td style="text-align: left;">112</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">145</td>
+<td style="text-align: left;">117</td>
+<td style="text-align: left;">132</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">147</td>
+<td style="text-align: left;">118</td>
+<td style="text-align: left;">105</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">149</td>
+<td style="text-align: left;">119</td>
+<td style="text-align: left;">136</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The types of data in the two columns:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Triglycerides</th>
+<th style="text-align: left;">LDL_Cholesterol</th>
+<th style="text-align: left;">Glucose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">numeric</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><br><strong>3. Explore the data:</strong><br>(a) get the descriptive statistics<br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>corr3var <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">describe</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 4%">
+<col style="width: 2%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 5%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">vars</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">median</th>
+<th style="text-align: right;">trimmed</th>
+<th style="text-align: right;">mad</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">range</th>
+<th style="text-align: right;">skew</th>
+<th style="text-align: right;">kurtosis</th>
+<th style="text-align: right;">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">159.9474</td>
+<td style="text-align: right;">21.27981</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">159.7647</td>
+<td style="text-align: right;">19.2738</td>
+<td style="text-align: right;">123</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.2831225</td>
+<td style="text-align: right;">-0.8907746</td>
+<td style="text-align: right;">4.881924</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LDL_Cholesterol</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">128.0526</td>
+<td style="text-align: right;">12.94636</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">127.8824</td>
+<td style="text-align: right;">13.3434</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0.2032734</td>
+<td style="text-align: right;">-0.9891948</td>
+<td style="text-align: right;">2.970098</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Glucose</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">123.6316</td>
+<td style="text-align: right;">16.93849</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">123.4706</td>
+<td style="text-align: right;">26.6868</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">149</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">-0.0069312</td>
+<td style="text-align: right;">-1.6184640</td>
+<td style="text-align: right;">3.885955</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>(b) test if the data is normally distributed</strong><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>corr3var <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides, LDL_Cholesterol, Glucose) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">statistic</th>
+<th style="text-align: left;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Glucose</td>
+<td style="text-align: left;">0.9058943</td>
+<td style="text-align: left;">0.0622645</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LDL_Cholesterol</td>
+<td style="text-align: left;">0.9725392</td>
+<td style="text-align: left;">0.8258618</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: left;">0.9671358</td>
+<td style="text-align: left;">0.7180749</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>This data is normally distributed (P&gt;0.05 for all three variables, although only just for Glucose) and so we can use Pearson’s r coefficient.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>4. Produce a matrix of scatter plots and correlation coefficients</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>corr3var <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the matrix">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the matrix
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/matrix.corr2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This shows the distribution of each variable, a scatter plot of each variable against the other and the correlation coefficient.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>5. The correlation</strong><br> Again, if any of the variables are not normally distributed, use <code>method = "spearman"</code> in the script below.<br> <em>NB</em> In the script below, ‘Triglycerides:Glucose’ means include all variables in the dataframe from Triglycerides (the 1st column) to Glucose (the 3rd column). Alternatively, you can type the name of each variable heading separated by a comma ‘,’.<br><br> The code to do the correlation is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>corr3var <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor_test</span>(Triglycerides<span class="sc">:</span>Glucose, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the matrix">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the matrix
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 7%">
+<col style="width: 13%">
+<col style="width: 7%">
+<col style="width: 13%">
+<col style="width: 11%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">var1</th>
+<th style="text-align: left;">var2</th>
+<th style="text-align: right;">cor</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+<th style="text-align: left;">method</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">Inf</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: left;">Pearson</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: left;">LDL_Cholesterol</td>
+<td style="text-align: right;">0.990</td>
+<td style="text-align: right;">29.1490160</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.9739525</td>
+<td style="text-align: right;">0.9962893</td>
+<td style="text-align: left;">Pearson</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: left;">Glucose</td>
+<td style="text-align: right;">0.084</td>
+<td style="text-align: right;">0.3460500</td>
+<td style="text-align: right;">0.734</td>
+<td style="text-align: right;">-0.3852071</td>
+<td style="text-align: right;">0.5181608</td>
+<td style="text-align: left;">Pearson</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LDL_Cholesterol</td>
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: right;">0.990</td>
+<td style="text-align: right;">29.1490160</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.9739525</td>
+<td style="text-align: right;">0.9962893</td>
+<td style="text-align: left;">Pearson</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LDL_Cholesterol</td>
+<td style="text-align: left;">LDL_Cholesterol</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">Inf</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: left;">Pearson</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LDL_Cholesterol</td>
+<td style="text-align: left;">Glucose</td>
+<td style="text-align: right;">0.110</td>
+<td style="text-align: right;">0.4394828</td>
+<td style="text-align: right;">0.666</td>
+<td style="text-align: right;">-0.3658311</td>
+<td style="text-align: right;">0.5344689</td>
+<td style="text-align: left;">Pearson</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Glucose</td>
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: right;">0.084</td>
+<td style="text-align: right;">0.3460500</td>
+<td style="text-align: right;">0.734</td>
+<td style="text-align: right;">-0.3852071</td>
+<td style="text-align: right;">0.5181608</td>
+<td style="text-align: left;">Pearson</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Glucose</td>
+<td style="text-align: left;">LDL_Cholesterol</td>
+<td style="text-align: right;">0.110</td>
+<td style="text-align: right;">0.4394828</td>
+<td style="text-align: right;">0.666</td>
+<td style="text-align: right;">-0.3658311</td>
+<td style="text-align: right;">0.5344689</td>
+<td style="text-align: left;">Pearson</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Glucose</td>
+<td style="text-align: left;">Glucose</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">Inf</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: left;">Pearson</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Look for each comparison of variables (note that each comparison is quoted twice; <em>eg</em> once for Triglycerides <em>v.</em> Glucose and also for Glucose <em>v.</em> Triglycerides)<br> <br> You can see that Triglycerides correlates significantly with LDL (r=0.99, P &lt;&lt;0.001), but neither Triglycerides nor LDL correlate with Glucose (r=0.084 P=0.734 and r=0.11 P=0.666, respectively)</p>
+</div>
+</div>
+</div>
+<p>This can also shown in nice graphical display of correlation coefficients:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>corr3var <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corrplot</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">'circle'</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">type   =</span> <span class="st">"upper"</span>,     </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">diag   =</span> F,           </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">order  =</span> <span class="st">"original"</span>,  </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">tl.col =</span> <span class="st">"black"</span>,    </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">tl.srt =</span> <span class="dv">45</span>)        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the plot">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the plot
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/corrplot3a-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The larger the circle, the stronger the correlation (nearer to +1 or -1). Blue is a positive correlation and red is a negative correlation (shade also indicates the strength of the correlation).</p>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="callout callout-style-default callout-tip callout-titled" title="Click to read Introduction">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to read Introduction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This example analyses the nature of the relationship between Triglycerides and LDL Cholesterol, and to see if we can predict Triglyceride values (the dependent variable) from the LDL (the independent or predictor variable). It uses regression analysis to create an equation for a predicted linear relationship and analyses how good it is as an equation to predict Triglycerides from LDL.</p>
+</div>
+</div>
+</div>
+<p><strong>1. You will be using the same data example as for the bivariate correlation example. If you have not already downloaded the data file, download the Excel file <em>Correlation_2_var_data.xlsx</em> from Canvas and save it to a folder that you will use as your working directory.</strong></p>
+<p>In RStudio, locate the file and set that location as your working directory.</p>
+<p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>lin_regr</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-1" class="code-annotation-target"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a>lin_regr <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Correlation_2_var_data.xlsx"</span>)</span>
+<span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lin_regr) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span>
+<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a>lin_regr <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(class)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="1" data-code-annotation="1">Import the excel file and store it as a dataframe called ‘lin_regr’.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The 1st 6 rows of the dataframe:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Triglycerides</th>
+<th style="text-align: left;">LDL_Cholesterol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">123</td>
+<td style="text-align: left;">107</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">132</td>
+<td style="text-align: left;">110</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">135</td>
+<td style="text-align: left;">112</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">145</td>
+<td style="text-align: left;">117</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">147</td>
+<td style="text-align: left;">118</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">149</td>
+<td style="text-align: left;">119</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The data types:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Triglycerides</th>
+<th style="text-align: left;">LDL_Cholesterol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">numeric</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>The data are numeric in both columns which is what we want.</p>
+</div>
+</div>
+</div>
+<p><br> <br> <strong>3. Explore the data</strong><br> a) Produce a scatter plot with a line of best fit through the data<br> <em>Note</em> I am placing Triglycerides on the y-axis because this is the dependent variable that we want to predict.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1" aria-hidden="true" tabindex="-1"></a>lin_regr <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="1">1</button><span id="annotated-cell-14-2" class="code-annotation-target"><a href="#annotated-cell-14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>LDL_Cholesterol, <span class="at">y=</span>Triglycerides)) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="2">2</button><span id="annotated-cell-14-3" class="code-annotation-target"><a href="#annotated-cell-14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">colour =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="3">3</button><span id="annotated-cell-14-4" class="code-annotation-target"><a href="#annotated-cell-14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-14-5"><a href="#annotated-cell-14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatter plot and fitted line for LDL Cholesterol data"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="2" data-code-annotation="1">Send the sata to the ggplot function with LDL on the x-axis &amp; Triglycerides on the y-axis</span>
+</dd>
+<dt data-target-cell="annotated-cell-14" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="3" data-code-annotation="2">Format the data as blue points</span>
+</dd>
+<dt data-target-cell="annotated-cell-14" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="4" data-code-annotation="3">Fit a line of best fit to the points</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the scatter plot">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the scatter plot
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/scatter.regr1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><br> b) Check for normality of distribution for the dependent variable</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>lin_regr <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="2" data-code-annotation="1">Send the lin_regr data to the Shapiro-Wilk test, and test the Triglycerides variable (the deprendent variable) for a normal distribution.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">statistic</th>
+<th style="text-align: left;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: left;">0.9671358</td>
+<td style="text-align: left;">0.7180749</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>P&gt;0.05, so the dependent variable data is normally distributed.</p>
+</div>
+</div>
+</div>
+<p><br><br> <strong>4. The regression analysis</strong><br> <em>Note</em>: In the script the first variable is the dependent variable. It reads as ‘regress Triglycerides ’by’ LDL_Cholesterol’.<br> <br>The regression model fit results are stored in an object called ‘<em>regr_fit</em>’ which we then summarise to see the results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1">1</button><span id="annotated-cell-16-1" class="code-annotation-target"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a>regr_fit <span class="ot">&lt;-</span>  <span class="fu">lm</span>(Triglycerides <span class="sc">~</span> LDL_Cholesterol, <span class="at">data =</span> lin_regr)</span>
+<span id="annotated-cell-16-2"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a>regr_fit <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="2">2</button><span id="annotated-cell-16-3" class="code-annotation-target"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-16" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-16" data-code-lines="1" data-code-annotation="1">This means: regress Triglycerides (the dependent variable) by LDL_Cholesterol (the predictor). The data is in the lin_regr dataframe. Store the regression result in an object called ‘regr_fit’.</span>
+</dd>
+<dt data-target-cell="annotated-cell-16" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-16" data-code-lines="3" data-code-annotation="2">View the contents of the new ‘regr_fit’ object.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Triglycerides ~ LDL_Cholesterol, data = lin_regr)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.3717 -1.8717  0.4909  1.8345  4.3534 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     -48.45705    7.18415  -6.745 3.43e-06 ***
+LDL_Cholesterol   1.62749    0.05583  29.149 5.91e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.067 on 17 degrees of freedom
+Multiple R-squared:  0.9804,    Adjusted R-squared:  0.9792 
+F-statistic: 849.7 on 1 and 17 DF,  p-value: 5.906e-16</code></pre>
+</div>
+</div>
+<ul>
+<li>Residuals = actual value - predicted value. A negative value means the actual value was lower than predicted; a positive actual is higher than predicted. Median should be close to 0.</li>
+<li>The equation of the line (using the coefficients) is: <strong>Triglycerides = -48.46 + 1.63(LDL Cholesterol)</strong></li>
+<li><strong>Adj R-squared = 0.979</strong>: the model accounts for 97.9% of the variation of Triglycerides.</li>
+<li>F-statistic model analysis: P=5.91x10<sup>-16</sup>, so the model has a highly statistically significant fit to the data.<br> <br> <em>Note</em>:<br></li>
+<li>The <strong>effect size</strong> is the correlation coefficient, r. This is just the square root of the Adj R<sup>2</sup> value.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.9792</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9895454</code></pre>
+</div>
+</div>
+<p>Values close to, -1 or +1 are very strong effects. A value close to 0 is weak.<br> Here, r = 0.99 (rounded up), and so there is a very strong effect.</p>
+</div>
+</div>
+</div>
+<p><br><br> <strong>5. Regression diagnostics</strong><br> a) Standardised residuals should be normally distributed.<br> The first thing to do is to calculate the standardised residuals, using the <em>regr_fit</em> model results we created above, and store them in an object called ‘<em>st_resid</em>’:<br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="1">1</button><span id="annotated-cell-17-1" class="code-annotation-target"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a>st_resid <span class="ot">&lt;-</span> regr_fit <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-17-2"><a href="#annotated-cell-17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rstandard</span>() <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-17-3"><a href="#annotated-cell-17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-17" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-17" data-code-lines="1" data-code-annotation="1">Send the regr_fit object to the rstandard() function which calculates the standardised residuals. Store the results as an object called st_resid</span>
+</dd>
+</dl>
+</div>
+</div>
+<p><br> Produce a histogram to view the standardised residuals visually and test with Shapiro Wilk test. <br>A histogram:<br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-18"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-18-1"><a href="#annotated-cell-18-1" aria-hidden="true" tabindex="-1"></a>st_resid <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="1">1</button><span id="annotated-cell-18-2" class="code-annotation-target"><a href="#annotated-cell-18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="2">2</button><span id="annotated-cell-18-3" class="code-annotation-target"><a href="#annotated-cell-18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-18-4"><a href="#annotated-cell-18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of standardised residuals"</span>,</span>
+<span id="annotated-cell-18-5"><a href="#annotated-cell-18-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Standardised residuals"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-18" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-18" data-code-lines="2" data-code-annotation="1">Send the standardised residuals (st_resid) to the ggplot function</span>
+</dd>
+<dt data-target-cell="annotated-cell-18" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-18" data-code-lines="3" data-code-annotation="2">Produce a histogram with blue bars and black outline</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the histogram">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the histogram
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/regr.hist1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><br> Test the standardised residuals to see if they are normally distributed:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>st_resid <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(value) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">statistic</th>
+<th style="text-align: left;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">value</td>
+<td style="text-align: left;">0.9541466</td>
+<td style="text-align: left;">0.4633968</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>So here the standardised residuals are normally distributed (P&gt;0.05)</p>
+</div>
+</div>
+</div>
+<p><br><br> b) Diagnostic plots<br> The following will produce the diagnostic plots for the <code>regr_fit</code> regression model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(regr_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Run command and then hit return in Console. The ouputs will appear in sequence.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the diagnostoc plots">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the diagnostoc plots
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/regr.diagn1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/regr.diagn1-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/regr.diagn1-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/regr.diagn1-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><em>Residuals vs.&nbsp;Fitted</em> - should be even scatter of points around 0. Residuals should have no pattern in relation to predicted (fitted) values. Fitted line should be reasonably close to straight flat line (residuals all about the same = homoscedasticity). Here, some departure, so might not be quite linear.</li>
+<li><em>Normal Q-Q</em> - diag line = normal distribution of residuals. The points should be close to the diagonal line.</li>
+<li><em>Scale-Location</em> - line should be horizontal flat. Similar to Residuals vs Fitted.</li>
+<li><em>Residuals vs.&nbsp;Leverage</em> - dotted lines = Cook’s Distance. If any points are near or cross the dotted lines, they have strong influence on the model.</li>
+</ul>
+</div>
+</div>
+</div>
+<p><br><br> c) Examine data for any data points that have a strong influence on the regression analysis.<br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-21"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="1">1</button><span id="annotated-cell-21-1" class="code-annotation-target"><a href="#annotated-cell-21-1" aria-hidden="true" tabindex="-1"></a>inflm <span class="ot">&lt;-</span> regr_fit <span class="sc">|&gt;</span> <span class="fu">influence.measures</span>()</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="2">2</button><span id="annotated-cell-21-2" class="code-annotation-target"><a href="#annotated-cell-21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inflm)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-21" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-21" data-code-lines="1" data-code-annotation="1">Send the regression model (regr_fit) to the influence.mearures() function &amp; store the results in an object called ‘inflm’.</span>
+</dd>
+<dt data-target-cell="annotated-cell-21" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-21" data-code-lines="2" data-code-annotation="2">View the contents of the new inflm object</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the influence statistics">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the influence statistics
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Potentially influential observations of
+     lm(formula = Triglycerides ~ LDL_Cholesterol, data = lin_regr) :
+
+   dfb.1_ dfb.LDL_ dffit cov.r   cook.d hat  
+12  0.12  -0.18    -0.60  0.64_*  0.14   0.06
+18  0.05  -0.05    -0.06  1.46_*  0.00   0.23
+19 -0.19   0.20     0.22  1.46_*  0.03   0.24</code></pre>
+</div>
+</div>
+<p>This prints out possible influential predictor values (here they are the data in rows 12, 18 and 19).</p>
+<ul>
+<li>hat = weight (Levereage) of each value on predicted values. Ranges 0 (no influence) - 1 (100% influence). Any value &gt; 2.5x(no. of predictors+1)/number of values should be looked at as having strong influence. Here = 2.5x(2/19) = 0.26</li>
+<li>Cook’s distance = measure of overall influence of a value on the model. Value &gt;1 may have large influence.</li>
+<li>DFFit = difference on predicted values when a case is included and excluded. Small value = low influence.</li>
+<li>dfb (DFBeta) = again measures difference in each estimate (intercept and slope) with and without the predictor value. Small value = low influence (dfb.1 is the effect on the intercept, dfb.LDL is effect on the predictor)</li>
+<li>Covariance ratio (cov.r) = role of observation on precision of estimate. If &gt; 1, improves precision; &lt;1 reduces precision<br> <br> <br></li>
+</ul>
+</div>
+</div>
+</div>
+<p><br><br> <strong>6. Re-do the scatter plot but add the equation and R-square</strong><br> Scatter plot with fitted line<br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1" aria-hidden="true" tabindex="-1"></a>lin_regr <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-22-2"><a href="#annotated-cell-22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(LDL_Cholesterol, Triglycerides)) <span class="sc">+</span></span>
+<span id="annotated-cell-22-3"><a href="#annotated-cell-22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">colour =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="1">1</button><span id="annotated-cell-22-4" class="code-annotation-target"><a href="#annotated-cell-22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-22-5"><a href="#annotated-cell-22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatter plot and fitted line for LDL Cholesterol data"</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="2">2</button><span id="annotated-cell-22-6" class="code-annotation-target"><a href="#annotated-cell-22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">label =</span> <span class="st">"Triglycerides = -48.46 + 1.63(LDL Cholesterol)"</span>, <span class="at">x =</span> <span class="dv">125</span>, <span class="at">y =</span> <span class="dv">195</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="3">3</button><span id="annotated-cell-22-7" class="code-annotation-target"><a href="#annotated-cell-22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">label =</span> <span class="st">"R-squared = 0.979"</span>, <span class="at">x =</span> <span class="dv">125</span>, <span class="at">y =</span> <span class="dv">190</span>, <span class="at">colour =</span> <span class="st">"black"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-22" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-22" data-code-lines="4" data-code-annotation="1">Adds a line of best fit to the scatter plot</span>
+</dd>
+<dt data-target-cell="annotated-cell-22" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-22" data-code-lines="6" data-code-annotation="2">Annotates the graph to add the equation of the line</span>
+</dd>
+<dt data-target-cell="annotated-cell-22" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-22" data-code-lines="7" data-code-annotation="3">Annotates the graph to add the R-squared value. The values 125 &amp; 190 position the text on the x &amp; y axes.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the plot">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the plot
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/new.plot1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="callout callout-style-default callout-tip callout-titled" title="Click to read Introduction">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to read Introduction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This example analyses the nature of the relationship between Triglycerides and more than one predictor: LDL Cholesterol, HDL Cholesterol and Glucose to see if they can be used together to accurately predict Triglyceride levels. It uses regression analysis to analyse which predictors should be included in the model to predict Triglycerides and to create an equation for the best model.</p>
+</div>
+</div>
+</div>
+<p><br> <strong>1. Download the Excel file <em>Mult_Regr_data.xlsx</em> from Canvas and save it to a folder that you will use as your working directory.</strong></p>
+<p>In RStudio, locate the file and set that location as your working directory.</p>
+<p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>mlr</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-27"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="1">1</button><span id="annotated-cell-27-1" class="code-annotation-target"><a href="#annotated-cell-27-1" aria-hidden="true" tabindex="-1"></a>mlr <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Mult_Regr_data.xlsx"</span>)</span>
+<span id="annotated-cell-27-2"><a href="#annotated-cell-27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mlr) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-27-3"><a href="#annotated-cell-27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span>
+<span id="annotated-cell-27-4"><a href="#annotated-cell-27-4" aria-hidden="true" tabindex="-1"></a>mlr <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-27-5"><a href="#annotated-cell-27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(class)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-27" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-27" data-code-lines="1" data-code-annotation="1">Import the excel file to R and store it in a dataframe object called ‘mlr’.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The 1st 6 rows of the dataframe:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Triglycerides</th>
+<th style="text-align: left;">LDL_Cholesterol</th>
+<th style="text-align: left;">Glucose</th>
+<th style="text-align: left;">HDL_Cholesterol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">123</td>
+<td style="text-align: left;">107</td>
+<td style="text-align: left;">124</td>
+<td style="text-align: left;">61</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">132</td>
+<td style="text-align: left;">110</td>
+<td style="text-align: left;">132</td>
+<td style="text-align: left;">58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">135</td>
+<td style="text-align: left;">112</td>
+<td style="text-align: left;">112</td>
+<td style="text-align: left;">55</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">145</td>
+<td style="text-align: left;">117</td>
+<td style="text-align: left;">132</td>
+<td style="text-align: left;">54</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">147</td>
+<td style="text-align: left;">118</td>
+<td style="text-align: left;">105</td>
+<td style="text-align: left;">52</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">149</td>
+<td style="text-align: left;">119</td>
+<td style="text-align: left;">136</td>
+<td style="text-align: left;">50</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The types of variables in the columns:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Triglycerides</th>
+<th style="text-align: left;">LDL_Cholesterol</th>
+<th style="text-align: left;">Glucose</th>
+<th style="text-align: left;">HDL_Cholesterol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">numeric</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>The variables are all numeric which is correct.</p>
+</div>
+</div>
+</div>
+<p><br> <br> <strong>3. Explore the data</strong><br> a) Matrix of correlation coefficients, scatter plots and distributions</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mlr <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the matrix">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the matrix
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/matrix.mlr1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here, we can see two of the predictors, LDL and HDL_Cholesterol, are highly correlated (r = -0.987). This is called ‘co-linearity’, and it is a problem - the contributions to the model are approx the same for both because they are so linked. Once LDL is entered, HDL adds very little because they are associated with the same influence on Triglycerides. It might be best to drop one of these predictors.</p>
+</div>
+</div>
+</div>
+<p><br> b) Test that the dependent variable (the one to be predicted; Triglycerides) is normally distributed</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mlr <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">statistic</th>
+<th style="text-align: left;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Triglycerides</td>
+<td style="text-align: left;">0.9671358</td>
+<td style="text-align: left;">0.7180749</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>As we’ve seen in the bivariate linear regression, the dependent variable is normally distributed (P&gt;0.05).<br> <em>NB</em> The main assumption is that the residuals are normally distributed - see later in diagnostics.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>4. The multiple regression</strong><br> We will use a method of multiple regression called stepwise regression. This runs a series of different models, including and excluding predictor variables, to find the model that has the best and statistically significant fit to the data.<br></p>
+<p>It compares models with different predictors included by the Aikaike Information Criterion (AIC). Select the model with lowest AIC value.<br> <br> <strong>a) The multiple regression</strong><br> Stepwise regression here starts from the null model with only the intercept included, and then runs through the various models, adding and removing predictors, to find which model best predicts the outcome, using AIC to compare models. Select the model with the lowest AIC value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-30"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="1">1</button><span id="annotated-cell-30-1" class="code-annotation-target"><a href="#annotated-cell-30-1" aria-hidden="true" tabindex="-1"></a>model.null <span class="ot">=</span> <span class="fu">lm</span>(Triglycerides <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mlr)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="2">2</button><span id="annotated-cell-30-2" class="code-annotation-target"><a href="#annotated-cell-30-2" aria-hidden="true" tabindex="-1"></a>model.full <span class="ot">=</span> <span class="fu">lm</span>(Triglycerides <span class="sc">~</span> LDL_Cholesterol <span class="sc">+</span> HDL_Cholesterol <span class="sc">+</span> Glucose,  <span class="at">data =</span> mlr)</span>
+<span id="annotated-cell-30-3"><a href="#annotated-cell-30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(model.null,</span>
+<span id="annotated-cell-30-4"><a href="#annotated-cell-30-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">upper=</span>model.full),</span>
+<span id="annotated-cell-30-5"><a href="#annotated-cell-30-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">direction=</span><span class="st">"both"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="3">3</button><span id="annotated-cell-30-6" class="code-annotation-target"><a href="#annotated-cell-30-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">data=</span>mlr)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-30" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-30" data-code-lines="1" data-code-annotation="1">The null model which defines only the constant intercept</span>
+</dd>
+<dt data-target-cell="annotated-cell-30" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-30" data-code-lines="2" data-code-annotation="2">The full model with all variables included</span>
+</dd>
+<dt data-target-cell="annotated-cell-30" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-30" data-code-lines="6" data-code-annotation="3">Run the stepwise regression</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-28" class="callout-28-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=117.17
+Triglycerides ~ 1
+
+                  Df Sum of Sq    RSS     AIC
++ LDL_Cholesterol  1    7991.1  159.9  44.470
++ HDL_Cholesterol  1    7970.6  180.3  46.754
+&lt;none&gt;                         8150.9 117.168
++ Glucose          1      57.0 8093.9 119.034
+
+Step:  AIC=44.47
+Triglycerides ~ LDL_Cholesterol
+
+                  Df Sum of Sq    RSS     AIC
++ HDL_Cholesterol  1      40.6  119.3  40.902
+&lt;none&gt;                          159.9  44.470
++ Glucose          1       3.7  156.1  46.020
+- LDL_Cholesterol  1    7991.1 8150.9 117.168
+
+Step:  AIC=40.9
+Triglycerides ~ LDL_Cholesterol + HDL_Cholesterol
+
+                  Df Sum of Sq    RSS    AIC
+&lt;none&gt;                         119.27 40.902
++ Glucose          1     0.092 119.18 42.887
+- HDL_Cholesterol  1    40.615 159.88 44.470
+- LDL_Cholesterol  1    61.031 180.30 46.754
+
+Call:
+lm(formula = Triglycerides ~ LDL_Cholesterol + HDL_Cholesterol, 
+    data = mlr)
+
+Coefficients:
+    (Intercept)  LDL_Cholesterol  HDL_Cholesterol  
+       100.7550           0.9014          -1.2086  </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>This shows that the model <code>Triglycerides~LDL+HDL</code> (ie only LDL and HDL included in the model, and not Glucose) is best model with AIC=40.9. <br>The call function at the end provides the coefficients to construct the equation of the model which is:<br> <strong>Triglycerides = 100.76 + 0.90(LDL) - 1.21(HDL)</strong> <br> <br> HOWEVER, we have already seen that LDL and HDL predictors are strongly correlated (see the correlation matrix above). This is an example of co-linearity in which both predictors provide very similar information to predict the dependent variable. In such cases it is often better to exclude one of the predictors, leaving the one with the strongest infliuence on Triglycerides.<br> In this case, it is probably best to exclude HDL Cholesterol (confirmed by the comparison of rmse values (see below).<br> <br> So the best regression model is (<em>NB</em> the results of the regression are stored in an object called <code>model.FINAL</code>):<br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-31"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-31" data-target-annotation="1">1</button><span id="annotated-cell-31-1" class="code-annotation-target"><a href="#annotated-cell-31-1" aria-hidden="true" tabindex="-1"></a>model.FINAL <span class="ot">&lt;-</span> <span class="fu">lm</span>(Triglycerides <span class="sc">~</span> LDL_Cholesterol, <span class="at">data =</span> mlr)</span>
+<span id="annotated-cell-31-2"><a href="#annotated-cell-31-2" aria-hidden="true" tabindex="-1"></a>model.FINAL <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-31" data-target-annotation="2">2</button><span id="annotated-cell-31-3" class="code-annotation-target"><a href="#annotated-cell-31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-31" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-31" data-code-lines="1" data-code-annotation="1">Regression of Triglycerides by LDL predictor only; results stored in an object called ‘model.FINAL’</span>
+</dd>
+<dt data-target-cell="annotated-cell-31" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-31" data-code-lines="3" data-code-annotation="2">View the results of the regression</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Triglycerides ~ LDL_Cholesterol, data = mlr)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.3717 -1.8717  0.4909  1.8345  4.3534 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     -48.45705    7.18415  -6.745 3.43e-06 ***
+LDL_Cholesterol   1.62749    0.05583  29.149 5.91e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.067 on 17 degrees of freedom
+Multiple R-squared:  0.9804,    Adjusted R-squared:  0.9792 
+F-statistic: 849.7 on 1 and 17 DF,  p-value: 5.906e-16</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>and the final equation of the model is: <br><br> <strong>Triglycerides = -48.46 + 1.63(LDL)</strong></p>
+<ul>
+<li>R<sup>2</sup> = 0.979; the model explains 97.9% of the variation in the dependent data</li>
+<li>The model fits the data (<em>ie</em> the predictors explain the variation in the dependent variable) with high statistical significance; Model fit P &lt; 5.91x10<sup>-16</sup><br> <br> <br></li>
+</ul>
+<p><strong>5. Diagnostics</strong><br></p>
+<p><strong><code>a)</code> Root mean square error (rmse)</strong><br> This analyses the overall size of the residuals of each model. The model with the lowest residuals, and therefore the lowest rmse, is best.<br> Note that I am excluding Glucose because we have already seen that it does not have a signficant effect on the outcome variable (Triglycerides).<br><br> I will obtain the rmse values for (i)HDL+LDL, (ii)LDL only and (iii)HDL only as predictors.<br></p>
+<ol type="i">
+<li>For LDL and HDL predictors:<br></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-32"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="1">1</button><span id="annotated-cell-32-1" class="code-annotation-target"><a href="#annotated-cell-32-1" aria-hidden="true" tabindex="-1"></a>modelHDL.LDL <span class="ot">&lt;-</span> <span class="fu">lm</span>(Triglycerides <span class="sc">~</span> LDL_Cholesterol <span class="sc">+</span> HDL_Cholesterol, <span class="at">data =</span> mlr)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="2">2</button><span id="annotated-cell-32-2" class="code-annotation-target"><a href="#annotated-cell-32-2" aria-hidden="true" tabindex="-1"></a>mseHDL.LDL <span class="ot">&lt;-</span> <span class="fu">mean</span>(modelHDL.LDL<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="3">3</button><span id="annotated-cell-32-3" class="code-annotation-target"><a href="#annotated-cell-32-3" aria-hidden="true" tabindex="-1"></a>rmseHDL.LDL <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(mseHDL.LDL)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="4">4</button><span id="annotated-cell-32-4" class="code-annotation-target"><a href="#annotated-cell-32-4" aria-hidden="true" tabindex="-1"></a>rmseHDL.LDL</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-32" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-32" data-code-lines="1" data-code-annotation="1">Regression for LDL and HDL predictors. Results stored in object called ‘modelHDL.LDL’.</span>
+</dd>
+<dt data-target-cell="annotated-cell-32" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-32" data-code-lines="2" data-code-annotation="2">Calculate mean standard error (mse) of the residuals</span>
+</dd>
+<dt data-target-cell="annotated-cell-32" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-32" data-code-lines="3" data-code-annotation="3">Calculate the square root of the mse to obtain the rmse</span>
+</dd>
+<dt data-target-cell="annotated-cell-32" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-32" data-code-lines="4" data-code-annotation="4">View the rmse result</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the rmse value">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the rmse value
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-30" class="callout-30-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.505462</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ol start="2" type="i">
+<li>For LDL predictor only (regression results have already been stored in an object called <code>model.FINAL</code> above):<br></li>
+</ol>
+<div class="cell" data-labe="rmse.mlr2">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mseLDL <span class="ot">&lt;-</span> <span class="fu">mean</span>(model.FINAL<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>rmseLDL <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(mseLDL)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>rmseLDL</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the rmse value">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the rmse value
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.900855</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ol start="3" type="i">
+<li>For HDL predictor only:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>model.HDL <span class="ot">&lt;-</span> <span class="fu">lm</span>(Triglycerides <span class="sc">~</span> HDL_Cholesterol, <span class="at">data =</span> mlr)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>mseHDL <span class="ot">&lt;-</span> <span class="fu">mean</span>(model.HDL<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>rmseHDL <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(mseHDL)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>rmseHDL</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the rmse value">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the rmse value
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-32" class="callout-32-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.080502</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The lowest rmse is for HDL + LDL (2.51), but these two predictors are strongly co-linear.<br> LDL only has an rmse of 2.90, lower than HDL only, so I am selecting LDL as the single predictor, removing HDL (as well as Glucose). <br> <br></p>
+<p><strong><code>b)</code> Diagnostic plots for the best selected model, <code>Triglycerides = -48.46+1.63(LDL)</code></strong>.<br> The results for the selected model has been stored in an object called <code>model.FINAL</code>; run the following script and then hit return in Console.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model.FINAL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the diagnostic plots">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the diagnostic plots
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/mlr.diagn1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/mlr.diagn1-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/mlr.diagn1-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats_Workshop3_files/figure-html/mlr.diagn1-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><em>Residuals vs.&nbsp;Fitted</em> - should be even scatter of points around 0. Residuals should have no pattern in relation to predicted (fitted) values. Fitted line should be reasonably close to straight flat line (residuals all about the same = homoscedasticity). Here, some departure, so might not be quite linear.<br> Rows 1, 12 and 17 have the 3 highest residuals.</li>
+<li><em>Normal Q-Q</em> - diag line = normal distribution of residuals. The points should be close to the diagonal line.</li>
+<li><em>Scale-Location</em> - line should be horizontal flat. Similar to Residuals vs Fitted.</li>
+<li><em>Residuals vs.&nbsp;Leverage</em> - dotted lines = Cook’s Distance. If any points near or cross dotted lines, have strong influence.</li>
+</ul>
+</div>
+</div>
+</div>
+<p><br> <br> <strong><code>c)</code> Examine the selected regression model for any data points that have a strong influence on the regression analysis.</strong><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>inflmlr <span class="ot">&lt;-</span> model.FINAL <span class="sc">|&gt;</span> <span class="fu">influence.measures</span>()</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inflmlr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This prints out possible influential predictor values.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the influence statistics">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click to see the influence statistics
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-34" class="callout-34-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Potentially influential observations of
+     lm(formula = Triglycerides ~ LDL_Cholesterol, data = mlr) :
+
+   dfb.1_ dfb.LDL_ dffit cov.r   cook.d hat  
+12  0.12  -0.18    -0.60  0.64_*  0.14   0.06
+18  0.05  -0.05    -0.06  1.46_*  0.00   0.23
+19 -0.19   0.20     0.22  1.46_*  0.03   0.24</code></pre>
+</div>
+</div>
+<ul>
+<li>hat = weight (Levereage) of each value on predicted values. Ranges 0 (no influence) - 1 (100% influence). Any value &gt; 2.5x(no. of predictors+1)/(number of values) should be looked at as having strong influence. Here = &gt; 2.5x(2/19) = 0.26</li>
+<li>Cook’s distance = measure of overall influence of a value on the model. Value &gt;1 may have large influence.</li>
+<li>DFFit = difference on predicted values when a case is included and excluded. Small value = low influence.</li>
+<li>dfb (DFBeta) = again measures difference in each estimate (intercept and slope) with and without the predictor value. Small value = low influence (dfb.1 is the effect on the intercept, dfb.LDL is effect on the predictor)</li>
+<li>Covariance ratio (cov.r) = role of observation on precision of estimate. If &gt; 1, improves precision; &lt;1 reduces precision</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          trigger: 'click',
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          positionFixed: true,
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
