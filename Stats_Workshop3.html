@@ -802,13 +802,13 @@ Click to see the matrix
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>corr3var <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor_test</span>(Triglycerides<span class="sc">:</span>Glucose, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the matrix">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the results">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click to see the matrix
+Click to see the results
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1256,7 +1256,7 @@ F-statistic: 849.7 on 1 and 17 DF,  p-value: 5.906e-16</code></pre>
 </div>
 </div>
 </div>
-<p><br><br> <strong>5. Regression diagnostics</strong><br> a) Standardised residuals should be normally distributed.<br> The first thing to do is to calculate the standardised residuals, using the <em>regr_fit</em> model results we created above, and store them in an object called ‘<em>st_resid</em>’:<br></p>
+<p><br><br> <strong>5. Regression diagnostics</strong><br> <code>a)</code> Standardised residuals should be normally distributed.<br> The first thing to do is to calculate the standardised residuals, using the <em>regr_fit</em> model results we created above, and store them in an object called ‘<em>st_resid</em>’:<br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="1">1</button><span id="annotated-cell-17-1" class="code-annotation-target"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a>st_resid <span class="ot">&lt;-</span> regr_fit <span class="sc">|&gt;</span></span>
 <span id="annotated-cell-17-2"><a href="#annotated-cell-17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rstandard</span>() <span class="sc">|&gt;</span></span>
@@ -1356,11 +1356,11 @@ Click to see the output
 </div>
 </div>
 </div>
-<p><br><br> b) Diagnostic plots<br> The following will produce the diagnostic plots for the <code>regr_fit</code> regression model.</p>
+<p><br><br> <code>b)</code> Diagnostic plots<br> The following will produce the diagnostic plots for the <code>regr_fit</code> regression model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(regr_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Run command and then hit return in Console. The ouputs will appear in sequence.</p>
+<p>Run command and then hit return by the prompt in the Console. Press return 4 times and the 4 graphs will appear in sequence.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the diagnostoc plots">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1412,7 +1412,7 @@ Click to see the diagnostoc plots
 </div>
 </div>
 </div>
-<p><br><br> c) Examine data for any data points that have a strong influence on the regression analysis.<br></p>
+<p><br><br> <code>c)</code> Examine data for any data points that have a strong influence on the regression analysis.<br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-21"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="1">1</button><span id="annotated-cell-21-1" class="code-annotation-target"><a href="#annotated-cell-21-1" aria-hidden="true" tabindex="-1"></a>inflm <span class="ot">&lt;-</span> regr_fit <span class="sc">|&gt;</span> <span class="fu">influence.measures</span>()</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="2">2</button><span id="annotated-cell-21-2" class="code-annotation-target"><a href="#annotated-cell-21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inflm)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1717,7 +1717,7 @@ Click to see the output
 </div>
 <p><br></p>
 <p><strong>4. The multiple regression</strong><br> We will use a method of multiple regression called stepwise regression. This runs a series of different models, including and excluding predictor variables, to find the model that has the best and statistically significant fit to the data.<br></p>
-<p>It compares models with different predictors included by the Aikaike Information Criterion (AIC). Select the model with lowest AIC value.<br> <br> <strong>a) The multiple regression</strong><br> Stepwise regression here starts from the null model with only the intercept included, and then runs through the various models, adding and removing predictors, to find which model best predicts the outcome, using AIC to compare models. Select the model with the lowest AIC value.</p>
+<p><strong><code>a)</code>Stepwise regression to select the best model:</strong> This compares models using the Aikaike Information Criterion (AIC) method. <br> <br>Stepwise regression here starts from the ‘null model’ (with only the intercept included), and then runs through the various models, adding and removing predictors, to find which model best predicts the dependent variable, using AIC to compare models. Select the model with the lowest AIC value.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-30"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="1">1</button><span id="annotated-cell-30-1" class="code-annotation-target"><a href="#annotated-cell-30-1" aria-hidden="true" tabindex="-1"></a>model.null <span class="ot">=</span> <span class="fu">lm</span>(Triglycerides <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mlr)</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="2">2</button><span id="annotated-cell-30-2" class="code-annotation-target"><a href="#annotated-cell-30-2" aria-hidden="true" tabindex="-1"></a>model.full <span class="ot">=</span> <span class="fu">lm</span>(Triglycerides <span class="sc">~</span> LDL_Cholesterol <span class="sc">+</span> HDL_Cholesterol <span class="sc">+</span> Glucose,  <span class="at">data =</span> mlr)</span>
@@ -1742,13 +1742,13 @@ Click to see the output
 </dl>
 </div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output of thr regression analysis">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click to see the output
+Click to see the output of thr regression analysis
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1795,7 +1795,7 @@ Coefficients:
 </div>
 </div>
 </div>
-<p>This shows that the model <code>Triglycerides~LDL+HDL</code> (ie only LDL and HDL included in the model, and not Glucose) is best model with AIC=40.9. <br>The call function at the end provides the coefficients to construct the equation of the model which is:<br> <strong>Triglycerides = 100.76 + 0.90(LDL) - 1.21(HDL)</strong> <br> <br> HOWEVER, we have already seen that LDL and HDL predictors are strongly correlated (see the correlation matrix above). This is an example of co-linearity in which both predictors provide very similar information to predict the dependent variable. In such cases it is often better to exclude one of the predictors, leaving the one with the strongest infliuence on Triglycerides.<br> In this case, it is probably best to exclude HDL Cholesterol (confirmed by the comparison of rmse values (see below).<br> <br> So the best regression model is (<em>NB</em> the results of the regression are stored in an object called <code>model.FINAL</code>):<br></p>
+<p>This shows that the model <code>Triglycerides~LDL+HDL</code> (ie only LDL and HDL included in the model, and not Glucose) is best model with AIC=40.9. <br><br>The call function at the end provides the coefficients to construct the equation of the model which is:<br> <code>Triglycerides = 100.76 + 0.90(LDL) - 1.21(HDL)</code> <br> <br> HOWEVER, we have already seen that LDL and HDL predictors are strongly correlated (see the correlation matrix above). This is an example of co-linearity in which both predictors provide very similar information to predict the dependent variable. In such cases it is often better to exclude one of the predictors, leaving the one with the strongest infliuence on Triglycerides.<br> In this case, it is probably best to exclude HDL Cholesterol (confirmed by the comparison of rmse values (see below).<br> <br> <strong><code>b)</code> Run the regression analysis for the best selected model:</strong> We now need to run the regression analysis on the best model and save the results of the regression in an object called <code>model.FINAL</code>):<br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-31"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-31" data-target-annotation="1">1</button><span id="annotated-cell-31-1" class="code-annotation-target"><a href="#annotated-cell-31-1" aria-hidden="true" tabindex="-1"></a>model.FINAL <span class="ot">&lt;-</span> <span class="fu">lm</span>(Triglycerides <span class="sc">~</span> LDL_Cholesterol, <span class="at">data =</span> mlr)</span>
 <span id="annotated-cell-31-2"><a href="#annotated-cell-31-2" aria-hidden="true" tabindex="-1"></a>model.FINAL <span class="sc">|&gt;</span></span>
@@ -1813,13 +1813,13 @@ Coefficients:
 </dl>
 </div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output of the regression analysis for the best model">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click to see the output
+Click to see the output of the regression analysis for the best model
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1850,38 +1850,31 @@ F-statistic: 849.7 on 1 and 17 DF,  p-value: 5.906e-16</code></pre>
 </div>
 </div>
 </div>
-<p>and the final equation of the model is: <br><br> <strong>Triglycerides = -48.46 + 1.63(LDL)</strong></p>
+<p>and the final equation of the model is: <br><br> <code>Triglycerides = -48.46 + 1.63(LDL)</code></p>
 <ul>
 <li>R<sup>2</sup> = 0.979; the model explains 97.9% of the variation in the dependent data</li>
 <li>The model fits the data (<em>ie</em> the predictors explain the variation in the dependent variable) with high statistical significance; Model fit P &lt; 5.91x10<sup>-16</sup><br> <br> <br></li>
 </ul>
 <p><strong>5. Diagnostics</strong><br></p>
-<p><strong><code>a)</code> Root mean square error (rmse)</strong><br> This analyses the overall size of the residuals of each model. The model with the lowest residuals, and therefore the lowest rmse, is best.<br> Note that I am excluding Glucose because we have already seen that it does not have a signficant effect on the outcome variable (Triglycerides).<br><br> I will obtain the rmse values for (i)HDL+LDL, (ii)LDL only and (iii)HDL only as predictors.<br></p>
-<ol type="i">
-<li>For LDL and HDL predictors:<br></li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-32"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="1">1</button><span id="annotated-cell-32-1" class="code-annotation-target"><a href="#annotated-cell-32-1" aria-hidden="true" tabindex="-1"></a>modelHDL.LDL <span class="ot">&lt;-</span> <span class="fu">lm</span>(Triglycerides <span class="sc">~</span> LDL_Cholesterol <span class="sc">+</span> HDL_Cholesterol, <span class="at">data =</span> mlr)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="2">2</button><span id="annotated-cell-32-2" class="code-annotation-target"><a href="#annotated-cell-32-2" aria-hidden="true" tabindex="-1"></a>mseHDL.LDL <span class="ot">&lt;-</span> <span class="fu">mean</span>(modelHDL.LDL<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="3">3</button><span id="annotated-cell-32-3" class="code-annotation-target"><a href="#annotated-cell-32-3" aria-hidden="true" tabindex="-1"></a>rmseHDL.LDL <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(mseHDL.LDL)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="4">4</button><span id="annotated-cell-32-4" class="code-annotation-target"><a href="#annotated-cell-32-4" aria-hidden="true" tabindex="-1"></a>rmseHDL.LDL</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong><code>a)</code> Root mean square error (rmse)</strong><br> This analyses the overall size of the residuals of each model, and it is often quoted for a regression model. It is the standard deviation of the residuals, and is a measure of how spread out the residuals are. If all points fall on the fitted line, rmse = 0; so, the smaller the rmse, the better the regression. <br><br>One could calculate the rmse for each possible model and use them to select the best model; the model with the lowest value of rmse is the best one. However, we have carried out a stepwise regression in which the AIC was used to select the best model, so we will use that.<br><br> Here, I am going to only calculate the rmse for the best model that the stepwise regression suggested (<em>ie</em> the model with only LDL as the predictor).<br></p>
+<p>Remember, we have stored the results of this regression in an object called <code>model.FINAL</code> above:<br></p>
+<div class="cell" data-labe="rmse.mlr2">
+<div class="sourceCode cell-code" id="annotated-cell-32"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="1">1</button><span id="annotated-cell-32-1" class="code-annotation-target"><a href="#annotated-cell-32-1" aria-hidden="true" tabindex="-1"></a>mseLDL <span class="ot">&lt;-</span> <span class="fu">mean</span>(model.FINAL<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="2">2</button><span id="annotated-cell-32-2" class="code-annotation-target"><a href="#annotated-cell-32-2" aria-hidden="true" tabindex="-1"></a>rmseLDL <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(mseLDL)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-32" data-target-annotation="3">3</button><span id="annotated-cell-32-3" class="code-annotation-target"><a href="#annotated-cell-32-3" aria-hidden="true" tabindex="-1"></a>rmseLDL</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-32" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-32" data-code-lines="1" data-code-annotation="1">Regression for LDL and HDL predictors. Results stored in object called ‘modelHDL.LDL’.</span>
+<span data-code-cell="annotated-cell-32" data-code-lines="1" data-code-annotation="1">Calculate the mean of the squared residuals from the <code>model.FINAL</code> object that contains the results of the regression analysis. Store in <code>mseLDL</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-32" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-32" data-code-lines="2" data-code-annotation="2">Calculate mean standard error (mse) of the residuals</span>
+<span data-code-cell="annotated-cell-32" data-code-lines="2" data-code-annotation="2">Calculate the square root of the mean; store in <code>rmseLDL</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-32" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-32" data-code-lines="3" data-code-annotation="3">Calculate the square root of the mse to obtain the rmse</span>
-</dd>
-<dt data-target-cell="annotated-cell-32" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-32" data-code-lines="4" data-code-annotation="4">View the rmse result</span>
+<span data-code-cell="annotated-cell-32" data-code-lines="3" data-code-annotation="3">View the rmse value</span>
 </dd>
 </dl>
 </div>
@@ -1900,85 +1893,28 @@ Click to see the rmse value
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.505462</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<ol start="2" type="i">
-<li>For LDL predictor only (regression results have already been stored in an object called <code>model.FINAL</code> above):<br></li>
-</ol>
-<div class="cell" data-labe="rmse.mlr2">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mseLDL <span class="ot">&lt;-</span> <span class="fu">mean</span>(model.FINAL<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>rmseLDL <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(mseLDL)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>rmseLDL</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the rmse value">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Click to see the rmse value
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-31" class="callout-31-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.900855</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<ol start="3" type="i">
-<li>For HDL predictor only:</li>
-</ol>
+<p><br> <br></p>
+<p><strong><code>b)</code> Diagnostic plots for the best selected model, <code>Triglycerides = -48.46+1.63(LDL)</code></strong>.<br> The results for the selected model has been stored in an object called <code>model.FINAL</code>; run the following script and then hit return at the prompt in the Console.<br> Hitting return 4 times will result in the 4 graphs being shown.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>model.HDL <span class="ot">&lt;-</span> <span class="fu">lm</span>(Triglycerides <span class="sc">~</span> HDL_Cholesterol, <span class="at">data =</span> mlr)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>mseHDL <span class="ot">&lt;-</span> <span class="fu">mean</span>(model.HDL<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>rmseHDL <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(mseHDL)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>rmseHDL</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model.FINAL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the rmse value">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the diagnostic plots (there is a brief description of each at the bottom)">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click to see the rmse value
+Click to see the diagnostic plots (there is a brief description of each at the bottom)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-32" class="callout-32-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.080502</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>The lowest rmse is for HDL + LDL (2.51), but these two predictors are strongly co-linear.<br> LDL only has an rmse of 2.90, lower than HDL only, so I am selecting LDL as the single predictor, removing HDL (as well as Glucose). <br> <br></p>
-<p><strong><code>b)</code> Diagnostic plots for the best selected model, <code>Triglycerides = -48.46+1.63(LDL)</code></strong>.<br> The results for the selected model has been stored in an object called <code>model.FINAL</code>; run the following script and then hit return in Console.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model.FINAL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the diagnostic plots">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Click to see the diagnostic plots
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-33" class="callout-33-contents callout-collapse collapse">
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -2021,21 +1957,21 @@ Click to see the diagnostic plots
 </div>
 <p><br> <br> <strong><code>c)</code> Examine the selected regression model for any data points that have a strong influence on the regression analysis.</strong><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>inflmlr <span class="ot">&lt;-</span> model.FINAL <span class="sc">|&gt;</span> <span class="fu">influence.measures</span>()</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inflmlr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>inflmlr <span class="ot">&lt;-</span> model.FINAL <span class="sc">|&gt;</span> <span class="fu">influence.measures</span>()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inflmlr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This prints out possible influential predictor values.</p>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the influence statistics">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the influence statistics (there is a brief description of each at the bottom)">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click to see the influence statistics
+Click to see the influence statistics (there is a brief description of each at the bottom)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-34" class="callout-34-contents callout-collapse collapse">
+<div id="callout-32" class="callout-32-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
