@@ -96,8 +96,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="testing-for-relationships-between-variables" class="level2 tabset">
-<h2 class="tabset anchored" data-anchor-id="testing-for-relationships-between-variables">Testing for Relationships between Variables</h2>
+<section id="testing-for-relationships-between-variables" class="level2">
+<h2 class="anchored" data-anchor-id="testing-for-relationships-between-variables">Testing for Relationships between Variables</h2>
 <p>This workshop introduces you to analysing:</p>
 <ul>
 <li>Correlations: analysing the strength of an association;<br></li>
@@ -124,8 +124,7 @@ Click to see packages to load (Copy and paste to Script editor)
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pastecs)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -151,13 +150,15 @@ Click to read the Introduction
 </div>
 </div>
 </div>
-<p><br> <strong>A. CORRELATION OF TWO VARIABLES</strong><br> <strong>1. Download the Excel file <em>Correlation_2_var_data.xlsx</em> from Canvas and save it to a folder that you will use as your working directory.</strong><br></p>
+<section id="a.-correlation-of-two-variables" class="level6">
+<h6 class="anchored" data-anchor-id="a.-correlation-of-two-variables"><strong>A. CORRELATION OF TWO VARIABLES</strong></h6>
+<p><br> <strong>1. Download the Excel file <em>Correlation_2_var_data.xlsx</em> from Canvas and save it to a folder that you will use as your working directory.</strong><br></p>
 <p>In RStudio, locate the file and set that location as your working directory.</p>
 <p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>corr2var</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>corr2var <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Correlation_2_var_data.xlsx"</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(corr2var) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(corr2var)</span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>corr2var <span class="sc">|&gt;</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-5" class="code-annotation-target"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(class)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
@@ -231,7 +232,6 @@ Click to see the output
 <p>The types of data in the two columns:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -246,7 +246,6 @@ Click to see the output
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 </div>
@@ -271,7 +270,6 @@ Click to see the output
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
-<div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 14%">
@@ -292,53 +290,53 @@ Click to see the output
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
-<th style="text-align: right;">vars</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">sd</th>
-<th style="text-align: right;">median</th>
-<th style="text-align: right;">trimmed</th>
-<th style="text-align: right;">mad</th>
-<th style="text-align: right;">min</th>
-<th style="text-align: right;">max</th>
-<th style="text-align: right;">range</th>
-<th style="text-align: right;">skew</th>
-<th style="text-align: right;">kurtosis</th>
-<th style="text-align: right;">se</th>
+<th style="text-align: left;">vars</th>
+<th style="text-align: left;">n</th>
+<th style="text-align: left;">mean</th>
+<th style="text-align: left;">sd</th>
+<th style="text-align: left;">median</th>
+<th style="text-align: left;">trimmed</th>
+<th style="text-align: left;">mad</th>
+<th style="text-align: left;">min</th>
+<th style="text-align: left;">max</th>
+<th style="text-align: left;">range</th>
+<th style="text-align: left;">skew</th>
+<th style="text-align: left;">kurtosis</th>
+<th style="text-align: left;">se</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Triglycerides</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">159.9474</td>
-<td style="text-align: right;">21.27981</td>
-<td style="text-align: right;">157</td>
-<td style="text-align: right;">159.7647</td>
-<td style="text-align: right;">19.2738</td>
-<td style="text-align: right;">123</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">77</td>
-<td style="text-align: right;">0.2831225</td>
-<td style="text-align: right;">-0.8907746</td>
-<td style="text-align: right;">4.881924</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">159.9474</td>
+<td style="text-align: left;">21.27981</td>
+<td style="text-align: left;">157</td>
+<td style="text-align: left;">159.7647</td>
+<td style="text-align: left;">19.2738</td>
+<td style="text-align: left;">123</td>
+<td style="text-align: left;">200</td>
+<td style="text-align: left;">77</td>
+<td style="text-align: left;">0.2831225</td>
+<td style="text-align: left;">-0.8907746</td>
+<td style="text-align: left;">4.881924</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">LDL_Cholesterol</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">128.0526</td>
-<td style="text-align: right;">12.94636</td>
-<td style="text-align: right;">128</td>
-<td style="text-align: right;">127.8824</td>
-<td style="text-align: right;">13.3434</td>
-<td style="text-align: right;">107</td>
-<td style="text-align: right;">152</td>
-<td style="text-align: right;">45</td>
-<td style="text-align: right;">0.2032734</td>
-<td style="text-align: right;">-0.9891948</td>
-<td style="text-align: right;">2.970098</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">128.0526</td>
+<td style="text-align: left;">12.94636</td>
+<td style="text-align: left;">128</td>
+<td style="text-align: left;">127.8824</td>
+<td style="text-align: left;">13.3434</td>
+<td style="text-align: left;">107</td>
+<td style="text-align: left;">152</td>
+<td style="text-align: left;">45</td>
+<td style="text-align: left;">0.2032734</td>
+<td style="text-align: left;">-0.9891948</td>
+<td style="text-align: left;">2.970098</td>
 </tr>
 </tbody>
 </table>
@@ -347,12 +345,10 @@ Click to see the output
 </div>
 </div>
 </div>
-</div>
 <p><strong>(b) test if the data is normally distributed</strong><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>corr2var <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides, LDL_Cholesterol) <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides, LDL_Cholesterol) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
@@ -492,12 +488,16 @@ Click to see the output
 </div>
 </div>
 </div>
-<p><br> <br> <br> <strong>B. CORRELATION OF THREE VARIABLES</strong><br> <strong>1. Download the Excel file <em>Correlation_3_var_data.xlsx</em> from Canvas and save it to the same folder as above so that it is in your working directory.</strong></p>
+<p><br><br></p>
+</section>
+<section id="b.-correlation-of-three-variables" class="level6">
+<h6 class="anchored" data-anchor-id="b.-correlation-of-three-variables"><strong>B. CORRELATION OF THREE VARIABLES</strong></h6>
+<p><br> <strong>1. Download the Excel file <em>Correlation_3_var_data.xlsx</em> from Canvas and save it to the same folder as above so that it is in your working directory.</strong></p>
 <p>In RStudio, locate the file and set that location as your working directory. <br><br><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>corr3var</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. All three columns contain numeric which is what we want.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>corr3var <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Correlation_3_var_data.xlsx"</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2">2</button><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(corr3var) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-7-3"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2">2</button><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(corr3var)</span>
+<span id="annotated-cell-7-3"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-7-4"><a href="#annotated-cell-7-4" aria-hidden="true" tabindex="-1"></a>corr3var <span class="sc">|&gt;</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="3">3</button><span id="annotated-cell-7-5" class="code-annotation-target"><a href="#annotated-cell-7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(class)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
@@ -578,7 +578,6 @@ Click to see the output
 <p>The types of data in the two columns:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -595,7 +594,6 @@ Click to see the output
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 </div>
@@ -620,7 +618,6 @@ Click to see the output
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
-<div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 14%">
@@ -641,69 +638,69 @@ Click to see the output
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
-<th style="text-align: right;">vars</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">sd</th>
-<th style="text-align: right;">median</th>
-<th style="text-align: right;">trimmed</th>
-<th style="text-align: right;">mad</th>
-<th style="text-align: right;">min</th>
-<th style="text-align: right;">max</th>
-<th style="text-align: right;">range</th>
-<th style="text-align: right;">skew</th>
-<th style="text-align: right;">kurtosis</th>
-<th style="text-align: right;">se</th>
+<th style="text-align: left;">vars</th>
+<th style="text-align: left;">n</th>
+<th style="text-align: left;">mean</th>
+<th style="text-align: left;">sd</th>
+<th style="text-align: left;">median</th>
+<th style="text-align: left;">trimmed</th>
+<th style="text-align: left;">mad</th>
+<th style="text-align: left;">min</th>
+<th style="text-align: left;">max</th>
+<th style="text-align: left;">range</th>
+<th style="text-align: left;">skew</th>
+<th style="text-align: left;">kurtosis</th>
+<th style="text-align: left;">se</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Triglycerides</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">159.9474</td>
-<td style="text-align: right;">21.27981</td>
-<td style="text-align: right;">157</td>
-<td style="text-align: right;">159.7647</td>
-<td style="text-align: right;">19.2738</td>
-<td style="text-align: right;">123</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">77</td>
-<td style="text-align: right;">0.2831225</td>
-<td style="text-align: right;">-0.8907746</td>
-<td style="text-align: right;">4.881924</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">159.9474</td>
+<td style="text-align: left;">21.27981</td>
+<td style="text-align: left;">157</td>
+<td style="text-align: left;">159.7647</td>
+<td style="text-align: left;">19.2738</td>
+<td style="text-align: left;">123</td>
+<td style="text-align: left;">200</td>
+<td style="text-align: left;">77</td>
+<td style="text-align: left;">0.2831225</td>
+<td style="text-align: left;">-0.8907746</td>
+<td style="text-align: left;">4.881924</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">LDL_Cholesterol</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">128.0526</td>
-<td style="text-align: right;">12.94636</td>
-<td style="text-align: right;">128</td>
-<td style="text-align: right;">127.8824</td>
-<td style="text-align: right;">13.3434</td>
-<td style="text-align: right;">107</td>
-<td style="text-align: right;">152</td>
-<td style="text-align: right;">45</td>
-<td style="text-align: right;">0.2032734</td>
-<td style="text-align: right;">-0.9891948</td>
-<td style="text-align: right;">2.970098</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">128.0526</td>
+<td style="text-align: left;">12.94636</td>
+<td style="text-align: left;">128</td>
+<td style="text-align: left;">127.8824</td>
+<td style="text-align: left;">13.3434</td>
+<td style="text-align: left;">107</td>
+<td style="text-align: left;">152</td>
+<td style="text-align: left;">45</td>
+<td style="text-align: left;">0.2032734</td>
+<td style="text-align: left;">-0.9891948</td>
+<td style="text-align: left;">2.970098</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Glucose</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">123.6316</td>
-<td style="text-align: right;">16.93849</td>
-<td style="text-align: right;">125</td>
-<td style="text-align: right;">123.4706</td>
-<td style="text-align: right;">26.6868</td>
-<td style="text-align: right;">101</td>
-<td style="text-align: right;">149</td>
-<td style="text-align: right;">48</td>
-<td style="text-align: right;">-0.0069312</td>
-<td style="text-align: right;">-1.6184640</td>
-<td style="text-align: right;">3.885955</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">123.6316</td>
+<td style="text-align: left;">16.93849</td>
+<td style="text-align: left;">125</td>
+<td style="text-align: left;">123.4706</td>
+<td style="text-align: left;">26.6868</td>
+<td style="text-align: left;">101</td>
+<td style="text-align: left;">149</td>
+<td style="text-align: left;">48</td>
+<td style="text-align: left;">-0.0069312</td>
+<td style="text-align: left;">-1.6184640</td>
+<td style="text-align: left;">3.885955</td>
 </tr>
 </tbody>
 </table>
@@ -712,12 +709,10 @@ Click to see the output
 </div>
 </div>
 </div>
-</div>
 <p><strong>(b) test if the data is normally distributed</strong><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>corr3var <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides, LDL_Cholesterol, Glucose) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides, LDL_Cholesterol, Glucose) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
@@ -977,6 +972,7 @@ Click to see the plot
 </div>
 </div>
 </div>
+</section>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="callout callout-style-default callout-tip callout-titled" title="Click to read Introduction">
@@ -1000,10 +996,9 @@ Click to read Introduction
 <p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>lin_regr</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-1" class="code-annotation-target"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a>lin_regr <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Correlation_2_var_data.xlsx"</span>)</span>
-<span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lin_regr) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span>
-<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a>lin_regr <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(class)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lin_regr) </span>
+<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>lin_regr <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(class)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
@@ -1067,7 +1062,6 @@ Click to see the output
 <p>The data types:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -1082,7 +1076,6 @@ Click to see the output
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 <p>The data are numeric in both columns which is what we want.</p>
@@ -1140,8 +1133,7 @@ Click to see the scatter plot
 <p><br> b) Check for normality of distribution for the dependent variable</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>lin_regr <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
@@ -1317,8 +1309,7 @@ Click to see the histogram
 <p><br> Test the standardised residuals to see if they are normally distributed:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>st_resid <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(value) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(value) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
@@ -1536,10 +1527,9 @@ Click to read Introduction
 <p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>mlr</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-27"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="1">1</button><span id="annotated-cell-27-1" class="code-annotation-target"><a href="#annotated-cell-27-1" aria-hidden="true" tabindex="-1"></a>mlr <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Mult_Regr_data.xlsx"</span>)</span>
-<span id="annotated-cell-27-2"><a href="#annotated-cell-27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mlr) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-27-3"><a href="#annotated-cell-27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span>
-<span id="annotated-cell-27-4"><a href="#annotated-cell-27-4" aria-hidden="true" tabindex="-1"></a>mlr <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-27-5"><a href="#annotated-cell-27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(class)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-27-2"><a href="#annotated-cell-27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mlr) </span>
+<span id="annotated-cell-27-3"><a href="#annotated-cell-27-3" aria-hidden="true" tabindex="-1"></a>mlr <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-27-4"><a href="#annotated-cell-27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise_all</span>(class)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-27" data-target-annotation="1">1</dt>
@@ -1617,7 +1607,6 @@ Click to see the output
 <p>The types of variables in the columns:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -1636,7 +1625,6 @@ Click to see the output
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 <p>The variables are all numeric which is correct.</p>
@@ -1676,8 +1664,7 @@ Click to see the matrix
 <p><br> b) Test that the dependent variable (the one to be predicted; Triglycerides) is normally distributed</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mlr <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">

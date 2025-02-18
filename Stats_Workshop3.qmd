@@ -12,7 +12,14 @@ editor: visual
 code-annotations: select
 ---
 
-## Testing for Relationships between Variables {.tabset}
+```{r}
+#| label: kable
+#| echo: false
+#| eval: true
+library(knitr)
+```
+
+## Testing for Relationships between Variables
 
 This workshop introduces you to analysing:
 
@@ -23,7 +30,11 @@ This workshop introduces you to analysing:
 First, open RStudio and a new R Script file. Load the packages that you will be using:
 
 ::: {.callout-important appearance="simple" collapse="true" title="Click to see packages to load (Copy and paste to Script editor)"}
-```{r packages, echo = TRUE, message = FALSE, warning = FALSE}
+```{r}
+#| label: packages
+#| echo: TRUE
+#| message: FALSE
+#| warning: FALSE
 library(tidyverse)
 library(rio)
 library(psych)
@@ -31,20 +42,21 @@ library(pastecs)
 library(rstatix)
 library(GGally)
 library(corrplot)
-library(knitr)
 ```
 :::
 
 <br>**SELECT THE RELEVANT TAB BELOW FOR YOUR DATA**
 
-::::::::::::::::::::::::: panel-tabset
+:::::::::::::::::::::::::::::::::: panel-tabset
 ## **CORRELATION**
 
 ::: {.callout-tip collapse="true" title="Click to read the Introduction" icon="true"}
 This example analyzes the strength of an association between two variables measured in 19 different people: LDL Cholesterol levels and Triglycerides. Correlations can be carried out for more than just two variables, and a second example correlates the strength of the association between 3 variables: Triglycerides, LDL Cholesterol and Glucose.
 :::
 
-<br> **A. CORRELATION OF TWO VARIABLES**<br> **1. Download the Excel file *Correlation_2_var_data.xlsx* from Canvas and save it to a folder that you will use as your working directory.**<br>
+###### **A. CORRELATION OF TWO VARIABLES**
+
+<br> **1. Download the Excel file *Correlation_2_var_data.xlsx* from Canvas and save it to a folder that you will use as your working directory.**<br>
 
 In RStudio, locate the file and set that location as your working directory.
 
@@ -55,8 +67,8 @@ In RStudio, locate the file and set that location as your working directory.
 #| echo: true
 #| eval: false
 corr2var <- import("Correlation_2_var_data.xlsx")  # <1>
-head(corr2var) |>       # <2>
-  kable(align = 'l')
+head(corr2var)        # <2>
+
 corr2var |>
 summarise_all(class)   # <3>
 ```
@@ -84,7 +96,8 @@ The types of data in the two columns:
 #| echo: false
 #| eval: true
 corr2var |>
-summarise_all(class)
+summarise_all(class) |>
+  kable(align = 'l')
 ```
 :::
 
@@ -104,7 +117,8 @@ corr2var |>
 #| echo: false
 #| eval: true
 corr2var |>
-  describe()
+  describe() |>
+  kable(align = 'l')
 ```
 :::
 
@@ -115,8 +129,7 @@ corr2var |>
 #| echo: TRUE
 #| eval: false
 corr2var |>
-  shapiro_test(Triglycerides, LDL_Cholesterol) |>
-  kable(align = 'l')
+  shapiro_test(Triglycerides, LDL_Cholesterol) 
 ```
 
 ::: {.callout-note collapse="true" title="Click to see the output" icon="false"}
@@ -184,7 +197,11 @@ corr2var |>
 Here, the correlation coefficient r = 0.99, so a very strong correlation (almost 100%). The Statistical significance of this is P \<\<0.001, so highly significant.
 :::
 
-<br> <br> <br> **B. CORRELATION OF THREE VARIABLES**<br> **1. Download the Excel file *Correlation_3_var_data.xlsx* from Canvas and save it to the same folder as above so that it is in your working directory.**
+<br><br>
+
+###### **B. CORRELATION OF THREE VARIABLES**
+
+<br> **1. Download the Excel file *Correlation_3_var_data.xlsx* from Canvas and save it to the same folder as above so that it is in your working directory.**
 
 In RStudio, locate the file and set that location as your working directory. <br><br><br> **2. Import the file to RStudio and store it as a dataframe called *corr3var*.**<br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. All three columns contain numeric which is what we want.
 
@@ -193,8 +210,8 @@ In RStudio, locate the file and set that location as your working directory. <br
 #| echo: true
 #| eval: false
 corr3var <- import("Correlation_3_var_data.xlsx")  # <1>
-head(corr3var) |>       # <2>
-  kable(align = 'l')
+head(corr3var)        # <2>
+
 corr3var |>
 summarise_all(class)   # <3>
 ```
@@ -222,7 +239,8 @@ The types of data in the two columns:
 #| echo: false
 #| eval: true
 corr3var |>
-summarise_all(class)
+summarise_all(class) |>
+  kable(align = 'l')
 ```
 :::
 
@@ -242,7 +260,8 @@ corr3var |>
 #| echo: false
 #| eval: true
 corr3var |>
-  describe()
+  describe() |>
+  kable(align = 'l')
 ```
 :::
 
@@ -253,8 +272,7 @@ corr3var |>
 #| echo: TRUE
 #| eval: false
 corr3var |>
-  shapiro_test(Triglycerides, LDL_Cholesterol, Glucose) |>
-  kable(align = 'l')
+  shapiro_test(Triglycerides, LDL_Cholesterol, Glucose) 
 ```
 
 ::: {.callout-note collapse="true" title="Click to see the output" icon="false"}
@@ -306,7 +324,7 @@ corr3var |>
   cor_test(Triglycerides:Glucose, method = "pearson")
 ```
 
-::: {.callout-note collapse="true" title="Click to see the matrix" icon="false"}
+::: {.callout-note collapse="true" title="Click to see the results" icon="false"}
 ```{r}
 #| label: corr3a
 #| echo: false
@@ -371,11 +389,11 @@ In RStudio, locate the file and set that location as your working directory.
 #| echo: TRUE
 #| eval: false
 lin_regr <- import("Correlation_2_var_data.xlsx")  # <1>
-head(lin_regr) |>
-  kable(align = 'l')
+head(lin_regr) 
 lin_regr |>
 summarise_all(class)
 ```
+
 1.  Import the excel file and store it as a dataframe called 'lin_regr'.
 
 ::: {.callout-note collapse="true" title="Click to see the output" icon="false"}
@@ -397,7 +415,8 @@ The data types:
 #| echo: false
 #| eval: true
 lin_regr |>
-summarise_all(class)
+summarise_all(class) |>
+  kable(align = 'l')
 ```
 
 The data are numeric in both columns which is what we want.
@@ -442,8 +461,7 @@ lin_regr |>
 #| echo: TRUE
 #| eval: false
 lin_regr |>
-  shapiro_test(Triglycerides) |>  # <1>
-  kable(align = 'l')
+  shapiro_test(Triglycerides)  # <1>
 ```
 
 1.  Send the lin_regr data to the Shapiro-Wilk test, and test the Triglycerides variable (the deprendent variable) for a normal distribution.
@@ -501,7 +519,7 @@ sqrt(0.9792)
 Values close to, -1 or +1 are very strong effects. A value close to 0 is weak.<br> Here, r = 0.99 (rounded up), and so there is a very strong effect.
 :::
 
-<br><br> **5. Regression diagnostics**<br> a) Standardised residuals should be normally distributed.<br> The first thing to do is to calculate the standardised residuals, using the *regr_fit* model results we created above, and store them in an object called '*st_resid*':<br>
+<br><br> **5. Regression diagnostics**<br> `a)` Standardised residuals should be normally distributed.<br> The first thing to do is to calculate the standardised residuals, using the *regr_fit* model results we created above, and store them in an object called '*st_resid*':<br>
 
 ```{r}
 #| label: stresid
@@ -549,8 +567,7 @@ st_resid |>
 #| echo: TRUE
 #| eval: false
 st_resid |>
-  shapiro_test(value) |>
-  kable(align = 'l')
+  shapiro_test(value) 
 ```
 
 ::: {.callout-note collapse="true" title="Click to see the output" icon="false"}
@@ -566,7 +583,7 @@ st_resid |>
 So here the standardised residuals are normally distributed (P\>0.05)
 :::
 
-<br><br> b) Diagnostic plots<br> The following will produce the diagnostic plots for the `regr_fit` regression model.
+<br><br> `b)` Diagnostic plots<br> The following will produce the diagnostic plots for the `regr_fit` regression model.
 
 ```{r}
 #| label: regr.diagn
@@ -575,7 +592,7 @@ So here the standardised residuals are normally distributed (P\>0.05)
 plot(regr_fit)
 ```
 
-Run command and then hit return in Console. The ouputs will appear in sequence.
+Run command and then hit return by the prompt in the Console. Press return 4 times and the 4 graphs will appear in sequence.
 
 ::: {.callout-note collapse="true" title="Click to see the diagnostoc plots" icon="false"}
 ```{r}
@@ -591,7 +608,7 @@ plot(regr_fit)
 -   *Residuals vs. Leverage* - dotted lines = Cook's Distance. If any points are near or cross the dotted lines, they have strong influence on the model.
 :::
 
-<br><br> c) Examine data for any data points that have a strong influence on the regression analysis.<br>
+<br><br> `c)` Examine data for any data points that have a strong influence on the regression analysis.<br>
 
 ```{r}
 #| label: regr.infl
@@ -674,15 +691,16 @@ In RStudio, locate the file and set that location as your working directory.
 #| echo: TRUE
 #| eval: false
 mlr <- import("Mult_Regr_data.xlsx")  #<1>
-head(mlr) |>
-  kable(align = 'l')
+head(mlr) 
 mlr |>
 summarise_all(class)
 ```
-1. Import the excel file to R and store it in a dataframe object called 'mlr'.
+
+1.  Import the excel file to R and store it in a dataframe object called 'mlr'.
 
 ::: {.callout-note collapse="true" title="Click to see the output" icon="false"}
 The 1st 6 rows of the dataframe:
+
 ```{r}
 #| label: import.mlr1
 #| echo: false
@@ -691,14 +709,18 @@ mlr <- import("Mult_Regr_data.xlsx")
 head(mlr) |>
   kable(align = 'l')
 ```
+
 The types of variables in the columns:
+
 ```{r}
 #| label: import.mlr2
 #| echo: false
 #| eval: true
 mlr |>
-summarise_all(class)
+summarise_all(class) |>
+  kable(align = 'l')
 ```
+
 The variables are all numeric which is correct.
 :::
 
@@ -720,6 +742,7 @@ mlr |>
 mlr |>
   ggpairs()
 ```
+
 Here, we can see two of the predictors, LDL and HDL_Cholesterol, are highly correlated (r = -0.987). This is called 'co-linearity', and it is a problem - the contributions to the model are approx the same for both because they are so linked. Once LDL is entered, HDL adds very little because they are associated with the same influence on Triglycerides. It might be best to drop one of these predictors.
 :::
 
@@ -730,8 +753,7 @@ Here, we can see two of the predictors, LDL and HDL_Cholesterol, are highly corr
 #| echo: TRUE
 #| eval: false
 mlr |>
-  shapiro_test(Triglycerides) |>
-  kable(align = 'l')
+  shapiro_test(Triglycerides)
 ```
 
 ::: {.callout-note collapse="true" title="Click to see the output" icon="false"}
@@ -743,14 +765,15 @@ mlr |>
   shapiro_test(Triglycerides) |>
   kable(align = 'l')
 ```
-As we've seen in the bivariate linear regression, the dependent variable is normally distributed (P>0.05).<br> *NB* The main assumption is that the residuals are normally distributed - see later in diagnostics.
+
+As we've seen in the bivariate linear regression, the dependent variable is normally distributed (P\>0.05).<br> *NB* The main assumption is that the residuals are normally distributed - see later in diagnostics.
 :::
+
 <br>
 
 **4. The multiple regression**<br> We will use a method of multiple regression called stepwise regression. This runs a series of different models, including and excluding predictor variables, to find the model that has the best and statistically significant fit to the data.<br>
 
-It compares models with different predictors included by the Aikaike Information Criterion (AIC). Select the model with lowest AIC value.<br> <br> 
-**a) The multiple regression**<br> Stepwise regression here starts from the null model with only the intercept included, and then runs through the various models, adding and removing predictors, to find which model best predicts the outcome, using AIC to compare models. Select the model with the lowest AIC value.
+**`a)`Stepwise regression to select the best model:** This compares models using the Aikaike Information Criterion (AIC) method. <br> <br>Stepwise regression here starts from the 'null model' (with only the intercept included), and then runs through the various models, adding and removing predictors, to find which model best predicts the dependent variable, using AIC to compare models. Select the model with the lowest AIC value.
 
 ```{r}
 #| label: step.mlr
@@ -763,11 +786,12 @@ step(model.null,
      direction="both",
      data=mlr) #<3>
 ```
-1. The null model which defines only the constant intercept
-2. The full model with all variables included
-3. Run the stepwise regression
 
-::: {.callout-note collapse="true" title="Click to see the output" icon="false"}
+1.  The null model which defines only the constant intercept
+2.  The full model with all variables included
+3.  Run the stepwise regression
+
+::: {.callout-note collapse="true" title="Click to see the output of thr regression analysis" icon="false"}
 ```{r}
 #| label: step.mlr1
 #| echo: false
@@ -781,9 +805,7 @@ step(model.null,
 ```
 :::
 
-This shows that the model `Triglycerides~LDL+HDL` (ie only LDL and HDL included in the model, and not Glucose) is best model with AIC=40.9. <br>The call function at the end provides the coefficients to construct the equation of the model which is:<br> **Triglycerides = 100.76 + 0.90(LDL) - 1.21(HDL)** <br> <br> 
-HOWEVER, we have already seen that LDL and HDL predictors are strongly correlated (see the correlation matrix above). This is an example of co-linearity in which both predictors provide very similar information to predict the dependent variable. In such cases it is often better to exclude one of the predictors, leaving the one with the strongest infliuence on Triglycerides.<br> In this case, it is probably best to exclude HDL Cholesterol (confirmed by the comparison of rmse values (see below).<br> <br> 
-So the best regression model is (*NB* the results of the regression are stored in an object called `model.FINAL`):<br>
+This shows that the model `Triglycerides~LDL+HDL` (ie only LDL and HDL included in the model, and not Glucose) is best model with AIC=40.9. <br><br>The call function at the end provides the coefficients to construct the equation of the model which is:<br> `Triglycerides = 100.76 + 0.90(LDL) - 1.21(HDL)` <br> <br> HOWEVER, we have already seen that LDL and HDL predictors are strongly correlated (see the correlation matrix above). This is an example of co-linearity in which both predictors provide very similar information to predict the dependent variable. In such cases it is often better to exclude one of the predictors, leaving the one with the strongest infliuence on Triglycerides.<br> In this case, it is probably best to exclude HDL Cholesterol (LDL had the higher correlation coefficient with Triglycerides).<br> <br> **`b)` Run the regression analysis for the best selected model:** We now need to run the regression analysis on the best model and save the results of the regression in an object called `model.FINAL`):<br>
 
 ```{r}
 #| label: model.final
@@ -793,10 +815,11 @@ model.FINAL <- lm(Triglycerides ~ LDL_Cholesterol, data = mlr) #<1>
 model.FINAL |>
   summary()  #<2> 
 ```
-1. Regression of Triglycerides by LDL predictor only; results stored in an object called 'model.FINAL'
-2. View the results of the regression
 
-::: {.callout-note collapse="true" title="Click to see the output" icon="false"}
+1.  Regression of Triglycerides by LDL predictor only; results stored in an object called 'model.FINAL'
+2.  View the results of the regression
+
+::: {.callout-note collapse="true" title="Click to see the output of the regression analysis for the best model" icon="false"}
 ```{r}
 #| label: model.final1
 #| echo: false
@@ -807,54 +830,30 @@ model.FINAL |>
 ```
 :::
 
-and the final equation of the model is: <br><br> **Triglycerides = -48.46 + 1.63(LDL)**
+and the final equation of the model is: <br><br> `Triglycerides = -48.46 + 1.63(LDL)`
 
 -   R^2^ = 0.979; the model explains 97.9% of the variation in the dependent data
 -   The model fits the data (*ie* the predictors explain the variation in the dependent variable) with high statistical significance; Model fit P \< 5.91x10^-16^<br> <br> <br>
 
 **5. Diagnostics**<br>
 
-**`a)` Root mean square error (rmse)**<br>
-This analyses the overall size of the residuals of each model. The model with the lowest residuals, and therefore the lowest rmse, is best.<br>
-Note that I am excluding Glucose because we have already seen that it does not have a signficant effect on the outcome variable (Triglycerides).<br><br>
-I will obtain the rmse values for (i)HDL+LDL, (ii)LDL only and (iii)HDL only as predictors.<br>
+**`a)` Root mean square error (rmse)**<br> This analyses the overall size of the residuals of each model, and it is often quoted for a regression model. It is the standard deviation of the residuals, and is a measure of how spread out the residuals are. If all points fall on the fitted line, rmse = 0; so, the smaller the rmse, the better the regression. <br><br>One could calculate the rmse for each possible model and use them to select the best model; the model with the lowest value of rmse is the best one. However, we have carried out a stepwise regression in which the AIC was used to select the best model, so we will use that.<br><br> Here, I am going to only calculate the rmse for the best model that the stepwise regression suggested (*ie* the model with only LDL as the predictor).<br>
 
-i) For LDL and HDL predictors:<br>
-```{r}
-#| label: rmse.mlr
-#| echo: TRUE
-#| eval: false
-modelHDL.LDL <- lm(Triglycerides ~ LDL_Cholesterol + HDL_Cholesterol, data = mlr) #<1>
-mseHDL.LDL <- mean(modelHDL.LDL$residuals^2)  #<2> 
-rmseHDL.LDL <- sqrt(mseHDL.LDL)   #<3>
-rmseHDL.LDL  # <4>
-```
-1. Regression for LDL and HDL predictors.  Results stored in object called 'modelHDL.LDL'.
-2. Calculate mean standard error (mse) of the residuals
-3. Calculate the square root of the mse to obtain the rmse
-4. View the rmse result
+Remember, we have stored the results of this regression in an object called `model.FINAL` above:<br>
 
-::: {.callout-note collapse="true" title="Click to see the rmse value" icon="false"}
-```{r}
-#| label: rmse.mlr1
-#| echo: false
-#| eval: true
-modelHDL.LDL <- lm(Triglycerides ~ LDL_Cholesterol + HDL_Cholesterol, data = mlr)
-mseHDL.LDL <- mean(modelHDL.LDL$residuals^2)
-rmseHDL.LDL <- sqrt(mseHDL.LDL)
-rmseHDL.LDL
-```
-:::
-
-ii) For LDL predictor only (regression results have already been stored in an object called `model.FINAL` above):<br>
 ```{r}
 #| labe: rmse.mlr2
 #| echo: TRUE
 #| eval: false
-mseLDL <- mean(model.FINAL$residuals^2)
-rmseLDL <- sqrt(mseLDL)
-rmseLDL
+mseLDL <- mean(model.FINAL$residuals^2)  #<1>
+rmseLDL <- sqrt(mseLDL)  #<2>
+rmseLDL  #<3>
 ```
+
+1.  Calculate the mean of the squared residuals from the `model.FINAL` object that contains the results of the regression analysis. Store in `mseLDL`
+2.  Calculate the square root of the mean; store in `rmseLDL`
+3.  View the rmse value
+
 ::: {.callout-note collapse="true" title="Click to see the rmse value" icon="false"}
 ```{r}
 #| label: rmse.mlr3
@@ -866,32 +865,9 @@ rmseLDL
 ```
 :::
 
-iii) For HDL predictor only:
-```{r}
-#| label: rmse.mlr4
-#| echo: TRUE
-#| eval: false
-model.HDL <- lm(Triglycerides ~ HDL_Cholesterol, data = mlr)
-mseHDL <- mean(model.HDL$residuals^2)
-rmseHDL <- sqrt(mseHDL)
-rmseHDL
-```
-::: {.callout-note collapse="true" title="Click to see the rmse value" icon="false"}
-```{r}
-#| label: rmse.mlr5
-#| echo: false
-#| eval: true
-model.HDL <- lm(Triglycerides ~ HDL_Cholesterol, data = mlr)
-mseHDL <- mean(model.HDL$residuals^2)
-rmseHDL <- sqrt(mseHDL)
-rmseHDL
-```
-:::
+<br> <br>
 
-The lowest rmse is for HDL + LDL (2.51), but these two predictors are strongly co-linear.<br> LDL only has an rmse of 2.90, lower than HDL only, so I am selecting LDL as the single predictor, removing HDL (as well as Glucose). <br> <br> 
-
-**`b)` Diagnostic plots for the best selected model, `Triglycerides = -48.46+1.63(LDL)`**.<br>
-The results for the selected model has been stored in an object called `model.FINAL`; run the following script and then hit return in Console.
+**`b)` Diagnostic plots for the best selected model, `Triglycerides = -48.46+1.63(LDL)`**.<br> The results for the selected model has been stored in an object called `model.FINAL`; run the following script and then hit return at the prompt in the Console.<br> Hitting return 4 times will result in the 4 graphs being shown.
 
 ```{r}
 #| label: mlr.diagn
@@ -899,7 +875,8 @@ The results for the selected model has been stored in an object called `model.FI
 #| eval: false
 plot(model.FINAL)
 ```
-::: {.callout-note collapse="true" title="Click to see the diagnostic plots" icon="false"}
+
+::: {.callout-note collapse="true" title="Click to see the diagnostic plots (there is a brief description of each at the bottom)" icon="false"}
 ```{r}
 #| label: mlr.diagn1
 #| echo: false
@@ -913,8 +890,7 @@ plot(model.FINAL)
 -   *Residuals vs. Leverage* - dotted lines = Cook's Distance. If any points near or cross dotted lines, have strong influence.
 :::
 
-<br> <br>
-**`c)` Examine the selected regression model for any data points that have a strong influence on the regression analysis.**<br>
+<br> <br> **`c)` Examine the selected regression model for any data points that have a strong influence on the regression analysis.**<br>
 
 ```{r}
 #| label: mlr.infl
@@ -923,9 +899,10 @@ plot(model.FINAL)
 inflmlr <- model.FINAL |> influence.measures()
 summary(inflmlr)
 ```
+
 This prints out possible influential predictor values.
 
-::: {.callout-note collapse="true" title="Click to see the influence statistics" icon="false"}
+::: {.callout-note collapse="true" title="Click to see the influence statistics (there is a brief description of each at the bottom)" icon="false"}
 ```{r}
 #| label: mlr.infl1
 #| echo: false
@@ -933,10 +910,11 @@ This prints out possible influential predictor values.
 inflmlr <- model.FINAL |> influence.measures()
 summary(inflmlr)
 ```
+
 -   hat = weight (Levereage) of each value on predicted values. Ranges 0 (no influence) - 1 (100% influence). Any value \> 2.5x(no. of predictors+1)/(number of values) should be looked at as having strong influence. Here = \> 2.5x(2/19) = 0.26
 -   Cook's distance = measure of overall influence of a value on the model. Value \>1 may have large influence.
 -   DFFit = difference on predicted values when a case is included and excluded. Small value = low influence.
 -   dfb (DFBeta) = again measures difference in each estimate (intercept and slope) with and without the predictor value. Small value = low influence (dfb.1 is the effect on the intercept, dfb.LDL is effect on the predictor)
 -   Covariance ratio (cov.r) = role of observation on precision of estimate. If \> 1, improves precision; \<1 reduces precision
 :::
-:::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::
