@@ -16,6 +16,7 @@ code-annotations: select
 #| label: kable
 #| echo: false
 #| eval: true
+#| warning: false
 library(knitr)
 ```
 
@@ -43,6 +44,7 @@ library(rstatix)
 library(GGally)
 library(corrplot)
 ```
+*NB* If you get a message saying that a package does not exist, you need to install it first with `install.packages("name_of_package")`
 :::
 
 <br>**SELECT THE RELEVANT TAB BELOW FOR YOUR DATA**
@@ -56,11 +58,19 @@ This example analyzes the strength of an association between two variables measu
 
 ###### **A. CORRELATION OF TWO VARIABLES**
 
-<br> **1. Download the Excel file *Correlation_2_var_data.xlsx* from Canvas and save it to a folder that you will use as your working directory.**<br>
+<br> **1. Download the Excel file `Correlation_2_var_data.xlsx`** from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).<br>
 
-In RStudio, locate the file and set that location as your working directory.
+::: {.callout-note collapse="true" title="Upload excel file to RStudio Cloud" icon="true"}
+-   Check that the data in the file is 'tidy'
+-   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
 
-<br> **2. Import the file to RStudio and store it as a dataframe called *corr2var*.**<br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
+![Uploading a file to RStudio](upload corr2.png){.lightbox width="70%"}
+
+-   In RStudio, locate the file and set the folder location as your working directory.
+:::
+
+<br>
+**2. Import the file to RStudio and store it as a dataframe called `corr2var`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
 
 ```{r}
 #| label: import2
@@ -201,9 +211,18 @@ Here, the correlation coefficient r = 0.99, so a very strong correlation (almost
 
 ###### **B. CORRELATION OF THREE VARIABLES**
 
-<br> **1. Download the Excel file *Correlation_3_var_data.xlsx* from Canvas and save it to the same folder as above so that it is in your working directory.**
+<br> **1. Download the Excel file `Correlation_3_var_data.xlsx`** from Canvas and save it to the same folder as above so that it is in your working directory (either in RStudio Cloud or in RStudio on your own laptop).
 
-In RStudio, locate the file and set that location as your working directory. <br><br><br> **2. Import the file to RStudio and store it as a dataframe called *corr3var*.**<br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. All three columns contain numeric which is what we want.
+::: {.callout-note collapse="true" title="Upload excel file to RStudio Cloud" icon="true"}
+-   Check that the data in the file is 'tidy'
+-   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
+
+![Uploading a file to RStudio](upload corr3.png){.lightbox width="70%"}
+
+-   In RStudio, locate the file and set the folder location as your working directory.
+:::
+<br><br> 
+**2. Import the file to RStudio and store it as a dataframe called `corr3var`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. All three columns contain numeric which is what we want.
 
 ```{r}
 #| label: import3
@@ -378,11 +397,11 @@ The larger the circle, the stronger the correlation (nearer to +1 or -1). Blue i
 This example analyses the nature of the relationship between Triglycerides and LDL Cholesterol, and to see if we can predict Triglyceride values (the dependent variable) from the LDL (the independent or predictor variable). It uses regression analysis to create an equation for a predicted linear relationship and analyses how good it is as an equation to predict Triglycerides from LDL.
 :::
 
-**1. You will be using the same data example as for the bivariate correlation example. If you have not already downloaded the data file, download the Excel file *Correlation_2_var_data.xlsx* from Canvas and save it to a folder that you will use as your working directory.**
+**1. You will be using the same data example as for the bivariate correlation example. If you have not already downloaded the data file, download the Excel file `Correlation_2_var_data.xlsx` from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).**
 
 In RStudio, locate the file and set that location as your working directory.
 
-<br> **2. Import the file to RStudio and store it as a dataframe called *lin_regr*.**<br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
+<br> **2. Import the file to RStudio and store it as a dataframe called `lin_regr`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
 
 ```{r}
 #| label: import.regr
@@ -680,11 +699,18 @@ lin_regr |>
 This example analyses the nature of the relationship between Triglycerides and more than one predictor: LDL Cholesterol, HDL Cholesterol and Glucose to see if they can be used together to accurately predict Triglyceride levels. It uses regression analysis to analyse which predictors should be included in the model to predict Triglycerides and to create an equation for the best model.
 :::
 
-<br> **1. Download the Excel file *Mult_Regr_data.xlsx* from Canvas and save it to a folder that you will use as your working directory.**
+<br> **1. Download the Excel file `Mult_Regr_data.xlsx`** from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).
 
-In RStudio, locate the file and set that location as your working directory.
+::: {.callout-note collapse="true" title="Upload excel file to RStudio Cloud" icon="true"}
+-   Check that the data in the file is 'tidy'
+-   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
 
-<br> **2. Import the file to RStudio and store it as a dataframe called *mlr*.**<br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
+![Uploading a file to RStudio](upload mult regr.png){.lightbox width="70%"}
+
+-   In RStudio, locate the file and set the folder location as your working directory.
+:::
+
+<br> **2. Import the file to RStudio and store it as a dataframe called `mlr`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
 
 ```{r}
 #| label: import.mlr

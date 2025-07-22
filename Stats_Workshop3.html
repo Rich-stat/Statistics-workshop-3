@@ -67,6 +67,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="Stats_Workshop3_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Stats_Workshop3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Stats_Workshop3_files/libs/bootstrap/bootstrap-d5ac29a56adf641187225d49675c3d41.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="Stats_Workshop3_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="Stats_Workshop3_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="Stats_Workshop3_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 
 
 </head>
@@ -126,6 +129,7 @@ Click to see packages to load (Copy and paste to Script editor)
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><em>NB</em> If you get a message saying that a package does not exist, you need to install it first with <code>install.packages("name_of_package")</code></p>
 </div>
 </div>
 </div>
@@ -152,9 +156,36 @@ Click to read the Introduction
 </div>
 <section id="a.-correlation-of-two-variables" class="level6">
 <h6 class="anchored" data-anchor-id="a.-correlation-of-two-variables"><strong>A. CORRELATION OF TWO VARIABLES</strong></h6>
-<p><br> <strong>1. Download the Excel file <em>Correlation_2_var_data.xlsx</em> from Canvas and save it to a folder that you will use as your working directory.</strong><br></p>
-<p>In RStudio, locate the file and set that location as your working directory.</p>
-<p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>corr2var</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
+<p><br> <strong>1. Download the Excel file <code>Correlation_2_var_data.xlsx</code></strong> from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).<br></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Upload excel file to RStudio Cloud">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Upload excel file to RStudio Cloud
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Check that the data in the file is ‘tidy’</li>
+<li>Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (<em>NB</em> If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="upload%20corr2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Uploading a file to RStudio"><img src="upload%20corr2.png" class="img-fluid figure-img" style="width:70.0%" alt="Uploading a file to RStudio"></a></p>
+<figcaption>Uploading a file to RStudio</figcaption>
+</figure>
+</div>
+<ul>
+<li>In RStudio, locate the file and set the folder location as your working directory.</li>
+</ul>
+</div>
+</div>
+</div>
+<p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <code>corr2var</code>.</strong><br> The <code>head()</code> function shows us the first 6 rows.<br> The <code>summarise_all(class)</code> function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>corr2var <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Correlation_2_var_data.xlsx"</span>)</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(corr2var)</span>
@@ -179,7 +210,7 @@ Click to read the Introduction
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -188,7 +219,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The first 6 rows:</p>
 <div class="cell">
@@ -257,7 +288,7 @@ Click to see the output
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">describe</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -266,7 +297,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -351,7 +382,7 @@ Click to see the output
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides, LDL_Cholesterol) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -360,7 +391,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -402,7 +433,7 @@ Click to see the output
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the scatter plot">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -411,7 +442,7 @@ Click to see the scatter plot
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -431,7 +462,7 @@ Click to see the scatter plot
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor_test</span>(Triglycerides, LDL_Cholesterol, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -440,7 +471,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -492,8 +523,36 @@ Click to see the output
 </section>
 <section id="b.-correlation-of-three-variables" class="level6">
 <h6 class="anchored" data-anchor-id="b.-correlation-of-three-variables"><strong>B. CORRELATION OF THREE VARIABLES</strong></h6>
-<p><br> <strong>1. Download the Excel file <em>Correlation_3_var_data.xlsx</em> from Canvas and save it to the same folder as above so that it is in your working directory.</strong></p>
-<p>In RStudio, locate the file and set that location as your working directory. <br><br><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>corr3var</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. All three columns contain numeric which is what we want.</p>
+<p><br> <strong>1. Download the Excel file <code>Correlation_3_var_data.xlsx</code></strong> from Canvas and save it to the same folder as above so that it is in your working directory (either in RStudio Cloud or in RStudio on your own laptop).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Upload excel file to RStudio Cloud">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Upload excel file to RStudio Cloud
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Check that the data in the file is ‘tidy’</li>
+<li>Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (<em>NB</em> If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="upload%20corr3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Uploading a file to RStudio"><img src="upload%20corr3.png" class="img-fluid figure-img" style="width:70.0%" alt="Uploading a file to RStudio"></a></p>
+<figcaption>Uploading a file to RStudio</figcaption>
+</figure>
+</div>
+<ul>
+<li>In RStudio, locate the file and set the folder location as your working directory.</li>
+</ul>
+</div>
+</div>
+</div>
+<p><br><br> <strong>2. Import the file to RStudio and store it as a dataframe called <code>corr3var</code>.</strong><br> The <code>head()</code> function shows us the first 6 rows.<br> The <code>summarise_all(class)</code> function shows us what type of data is stored in the dataframe. All three columns contain numeric which is what we want.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>corr3var <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Correlation_3_var_data.xlsx"</span>)</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2">2</button><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(corr3var)</span>
@@ -518,7 +577,7 @@ Click to see the output
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -527,7 +586,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The first 6 rows:</p>
 <div class="cell">
@@ -605,7 +664,7 @@ Click to see the output
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">describe</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -614,7 +673,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -715,7 +774,7 @@ Click to see the output
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides, LDL_Cholesterol, Glucose) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -724,7 +783,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -767,7 +826,7 @@ Click to see the output
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the matrix">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -776,7 +835,7 @@ Click to see the matrix
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -798,7 +857,7 @@ Click to see the matrix
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor_test</span>(Triglycerides<span class="sc">:</span>Glucose, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the results">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -807,7 +866,7 @@ Click to see the results
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -948,7 +1007,7 @@ Click to see the results
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">tl.srt =</span> <span class="dv">45</span>)        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the plot">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -957,7 +1016,7 @@ Click to see the plot
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -976,7 +1035,7 @@ Click to see the plot
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="callout callout-style-default callout-tip callout-titled" title="Click to read Introduction">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -985,15 +1044,15 @@ Click to read Introduction
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This example analyses the nature of the relationship between Triglycerides and LDL Cholesterol, and to see if we can predict Triglyceride values (the dependent variable) from the LDL (the independent or predictor variable). It uses regression analysis to create an equation for a predicted linear relationship and analyses how good it is as an equation to predict Triglycerides from LDL.</p>
 </div>
 </div>
 </div>
-<p><strong>1. You will be using the same data example as for the bivariate correlation example. If you have not already downloaded the data file, download the Excel file <em>Correlation_2_var_data.xlsx</em> from Canvas and save it to a folder that you will use as your working directory.</strong></p>
+<p><strong>1. You will be using the same data example as for the bivariate correlation example. If you have not already downloaded the data file, download the Excel file <code>Correlation_2_var_data.xlsx</code> from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).</strong></p>
 <p>In RStudio, locate the file and set that location as your working directory.</p>
-<p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>lin_regr</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
+<p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <code>lin_regr</code>.</strong><br> The <code>head()</code> function shows us the first 6 rows.<br> The <code>summarise_all(class)</code> function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-1" class="code-annotation-target"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a>lin_regr <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Correlation_2_var_data.xlsx"</span>)</span>
 <span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lin_regr) </span>
@@ -1009,7 +1068,7 @@ Click to read Introduction
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1018,7 +1077,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The 1st 6 rows of the dataframe:</p>
 <div class="cell">
@@ -1107,7 +1166,7 @@ Click to see the output
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the scatter plot">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1116,7 +1175,7 @@ Click to see the scatter plot
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -1144,7 +1203,7 @@ Click to see the scatter plot
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1153,7 +1212,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -1198,7 +1257,7 @@ Click to see the output
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1207,7 +1266,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1283,7 +1342,7 @@ F-statistic: 849.7 on 1 and 17 DF,  p-value: 5.906e-16</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the histogram">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1292,7 +1351,7 @@ Click to see the histogram
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -1312,7 +1371,7 @@ Click to see the histogram
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(value) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1321,7 +1380,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -1353,7 +1412,7 @@ Click to see the output
 </div>
 <p>Run command and then hit return by the prompt in the Console. Press return 4 times and the 4 graphs will appear in sequence.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the diagnostoc plots">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1362,7 +1421,7 @@ Click to see the diagnostoc plots
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -1421,7 +1480,7 @@ Click to see the diagnostoc plots
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the influence statistics">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1430,7 +1489,7 @@ Click to see the influence statistics
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1481,7 +1540,7 @@ Click to see the influence statistics
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the plot">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1490,7 +1549,7 @@ Click to see the plot
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -1507,7 +1566,7 @@ Click to see the plot
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <div class="callout callout-style-default callout-tip callout-titled" title="Click to read Introduction">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1516,15 +1575,42 @@ Click to read Introduction
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This example analyses the nature of the relationship between Triglycerides and more than one predictor: LDL Cholesterol, HDL Cholesterol and Glucose to see if they can be used together to accurately predict Triglyceride levels. It uses regression analysis to analyse which predictors should be included in the model to predict Triglycerides and to create an equation for the best model.</p>
 </div>
 </div>
 </div>
-<p><br> <strong>1. Download the Excel file <em>Mult_Regr_data.xlsx</em> from Canvas and save it to a folder that you will use as your working directory.</strong></p>
-<p>In RStudio, locate the file and set that location as your working directory.</p>
-<p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <em>mlr</em>.</strong><br> The head() function shows us the first 6 rows.<br> The summarise_all(class) function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
+<p><br> <strong>1. Download the Excel file <code>Mult_Regr_data.xlsx</code></strong> from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Upload excel file to RStudio Cloud">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Upload excel file to RStudio Cloud
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Check that the data in the file is ‘tidy’</li>
+<li>Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (<em>NB</em> If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="upload%20mult%20regr.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Uploading a file to RStudio"><img src="upload%20mult%20regr.png" class="img-fluid figure-img" style="width:70.0%" alt="Uploading a file to RStudio"></a></p>
+<figcaption>Uploading a file to RStudio</figcaption>
+</figure>
+</div>
+<ul>
+<li>In RStudio, locate the file and set the folder location as your working directory.</li>
+</ul>
+</div>
+</div>
+</div>
+<p><br> <strong>2. Import the file to RStudio and store it as a dataframe called <code>mlr</code>.</strong><br> The <code>head()</code> function shows us the first 6 rows.<br> The <code>summarise_all(class)</code> function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-27"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="1">1</button><span id="annotated-cell-27-1" class="code-annotation-target"><a href="#annotated-cell-27-1" aria-hidden="true" tabindex="-1"></a>mlr <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"Mult_Regr_data.xlsx"</span>)</span>
 <span id="annotated-cell-27-2"><a href="#annotated-cell-27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mlr) </span>
@@ -1540,7 +1626,7 @@ Click to read Introduction
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1549,7 +1635,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div id="callout-28" class="callout-28-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The 1st 6 rows of the dataframe:</p>
 <div class="cell">
@@ -1637,7 +1723,7 @@ Click to see the output
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the matrix">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1646,7 +1732,7 @@ Click to see the matrix
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -1667,7 +1753,7 @@ Click to see the matrix
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1676,7 +1762,7 @@ Click to see the output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div id="callout-30" class="callout-30-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -1730,7 +1816,7 @@ Click to see the output
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output of thr regression analysis">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1739,7 +1825,7 @@ Click to see the output of thr regression analysis
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-28" class="callout-28-contents callout-collapse collapse">
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1801,7 +1887,7 @@ Coefficients:
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output of the regression analysis for the best model">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1810,7 +1896,7 @@ Click to see the output of the regression analysis for the best model
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div id="callout-32" class="callout-32-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1867,7 +1953,7 @@ F-statistic: 849.7 on 1 and 17 DF,  p-value: 5.906e-16</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the rmse value">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1876,7 +1962,7 @@ Click to see the rmse value
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-30" class="callout-30-contents callout-collapse collapse">
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1892,7 +1978,7 @@ Click to see the rmse value
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model.FINAL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the diagnostic plots (there is a brief description of each at the bottom)">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1901,7 +1987,7 @@ Click to see the diagnostic plots (there is a brief description of each at the b
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-31" class="callout-31-contents callout-collapse collapse">
+<div id="callout-34" class="callout-34-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output-display">
@@ -1949,7 +2035,7 @@ Click to see the diagnostic plots (there is a brief description of each at the b
 </div>
 <p>This prints out possible influential predictor values.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the influence statistics (there is a brief description of each at the bottom)">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1958,7 +2044,7 @@ Click to see the influence statistics (there is a brief description of each at t
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-32" class="callout-32-contents callout-collapse collapse">
+<div id="callout-35" class="callout-35-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -2447,6 +2533,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
