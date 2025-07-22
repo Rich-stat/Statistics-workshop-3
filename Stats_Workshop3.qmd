@@ -399,7 +399,14 @@ This example analyses the nature of the relationship between Triglycerides and L
 
 **1. You will be using the same data example as for the bivariate correlation example. If you have not already downloaded the data file, download the Excel file `Correlation_2_var_data.xlsx` from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).**
 
-In RStudio, locate the file and set that location as your working directory.
+::: {.callout-note collapse="true" title="Upload excel file to RStudio Cloud" icon="true"}
+-   Check that the data in the file is 'tidy'
+-   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
+
+![Uploading a file to RStudio](upload corr2.png){.lightbox width="70%"}
+
+-   In RStudio, locate the file and set the folder location as your working directory.
+:::
 
 <br> **2. Import the file to RStudio and store it as a dataframe called `lin_regr`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
 
