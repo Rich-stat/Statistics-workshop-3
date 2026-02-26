@@ -44,12 +44,13 @@ library(rstatix)
 library(GGally)
 library(corrplot)
 ```
+
 *NB* If you get a message saying that a package does not exist, you need to install it first with `install.packages("name_of_package")`
 :::
 
 <br>**SELECT THE RELEVANT TAB BELOW FOR YOUR DATA**
 
-:::::::::::::::::::::::::::::::::: panel-tabset
+:::::::::::::::::::::::::::::::::::::::: panel-tabset
 ## **CORRELATION**
 
 ::: {.callout-tip collapse="true" title="Click to read the Introduction" icon="true"}
@@ -64,13 +65,12 @@ This example analyzes the strength of an association between two variables measu
 -   Check that the data in the file is 'tidy'
 -   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
 
-![Uploading a file to RStudio](upload corr2.png){.lightbox width="70%"}
+![Uploading a file to RStudio](upload%20corr2.png){.lightbox width="70%"}
 
 -   In RStudio, locate the file and set the folder location as your working directory.
 :::
 
-<br>
-**2. Import the file to RStudio and store it as a dataframe called `corr2var`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
+<br> **2. Import the file to RStudio and store it as a dataframe called `corr2var`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
 
 ```{r}
 #| label: import2
@@ -217,12 +217,12 @@ Here, the correlation coefficient r = 0.99, so a very strong correlation (almost
 -   Check that the data in the file is 'tidy'
 -   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
 
-![Uploading a file to RStudio](upload corr3.png){.lightbox width="70%"}
+![Uploading a file to RStudio](upload%20corr3.png){.lightbox width="70%"}
 
 -   In RStudio, locate the file and set the folder location as your working directory.
 :::
-<br><br> 
-**2. Import the file to RStudio and store it as a dataframe called `corr3var`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. All three columns contain numeric which is what we want.
+
+<br><br> **2. Import the file to RStudio and store it as a dataframe called `corr3var`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. All three columns contain numeric which is what we want.
 
 ```{r}
 #| label: import3
@@ -328,7 +328,7 @@ corr3var |>
   ggpairs()
 ```
 
-This shows the distribution of each variable, a scatter plot of each variable against the other and the correlation coefficient.
+This shows the distribution of each variable, a scatter plot of each variable against the other and the correlation coefficient. Statistically significant correlation coefficients are indicated with asterisks (\*=significant; \*\*=highly significant; \*\*\*=very highly significant).
 :::
 
 <br>
@@ -403,7 +403,7 @@ This example analyses the nature of the relationship between Triglycerides and L
 -   Check that the data in the file is 'tidy'
 -   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
 
-![Uploading a file to RStudio](upload corr2.png){.lightbox width="70%"}
+![Uploading a file to RStudio](upload%20corr2.png){.lightbox width="70%"}
 
 -   In RStudio, locate the file and set the folder location as your working directory.
 :::
@@ -712,7 +712,7 @@ This example analyses the nature of the relationship between Triglycerides and m
 -   Check that the data in the file is 'tidy'
 -   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
 
-![Uploading a file to RStudio](upload mult regr.png){.lightbox width="70%"}
+![Uploading a file to RStudio](upload%20mult%20regr.png){.lightbox width="70%"}
 
 -   In RStudio, locate the file and set the folder location as your working directory.
 :::
@@ -776,8 +776,10 @@ mlr |>
   ggpairs()
 ```
 
-Here, we can see two of the predictors, LDL and HDL_Cholesterol, are highly correlated (r = -0.987). This is called 'co-linearity', and it is a problem - the contributions to the model are approx the same for both because they are so linked. Once LDL is entered, HDL adds very little because they are associated with the same influence on Triglycerides. It might be best to drop one of these predictors.
+
+Statistically significant correlation coefficients are indicated with asterisks (\*=significant; \*\*=highly significant; \*\*\*=very highly significant). <br>Here, we can see two of the predictors, LDL and HDL_Cholesterol, are highly correlated with each other (r = -0.987). This is called 'co-linearity', and it is a problem - the contributions to the model are approx the same for both because they are so linked. Once LDL is entered, HDL adds very little because they are associated with the same influence on Triglycerides. It might be best to drop one of these predictors.
 :::
+
 
 <br> b) Test that the dependent variable (the one to be predicted; Triglycerides) is normally distributed
 
@@ -950,4 +952,4 @@ summary(inflmlr)
 -   dfb (DFBeta) = again measures difference in each estimate (intercept and slope) with and without the predictor value. Small value = low influence (dfb.1 is the effect on the intercept, dfb.LDL is effect on the predictor)
 -   Covariance ratio (cov.r) = role of observation on precision of estimate. If \> 1, improves precision; \<1 reduces precision
 :::
-::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::
