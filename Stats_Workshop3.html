@@ -1343,12 +1343,12 @@ F-statistic: 849.7 on 1 and 17 DF,  p-value: 5.906e-16</code></pre>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-17" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-17" data-code-lines="1" data-code-annotation="1">Send the regr_fit object to the rstandard() function which calculates the standardised residuals. Store the results as an object called st_resid</span>
+<span data-code-cell="annotated-cell-17" data-code-lines="1" data-code-annotation="1">Send the regr_fit object to the rstandard() function which calculates the standardised residuals. Store the results as an object called <code>st_resid</code></span>
 </dd>
 </dl>
 </div>
 </div>
-<p><br> Produce a histogram to view the standardised residuals visually and test with Shapiro Wilk test. <br>A histogram:<br></p>
+<p><br> Produce a histogram to view the standardised residuals visually:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-18"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-18-1"><a href="#annotated-cell-18-1" aria-hidden="true" tabindex="-1"></a>st_resid <span class="sc">|&gt;</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="1">1</button><span id="annotated-cell-18-2" class="code-annotation-target"><a href="#annotated-cell-18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
@@ -1392,7 +1392,7 @@ Click to see the histogram
 </div>
 </div>
 </div>
-<p><br> Test the standardised residuals to see if they are normally distributed:</p>
+<p><br> Use the Shapiro Wilk test to see if the standardised residuals are normally distributed:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>st_resid <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(value) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1433,18 +1433,30 @@ Click to see the output
 </div>
 </div>
 </div>
-<p><br><br> <code>b)</code> Diagnostic plots<br> The following will produce the diagnostic plots for the <code>regr_fit</code> regression model.</p>
+<p><br><br> <code>b)</code> Diagnostic plots<br> The following will produce 4 diagnostic plots for the <code>regr_fit</code> regression model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(regr_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-20"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="1">1</button><span id="annotated-cell-20-1" class="code-annotation-target"><a href="#annotated-cell-20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="2">2</button><span id="annotated-cell-20-2" class="code-annotation-target"><a href="#annotated-cell-20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(regr_fit)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-20" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-20" data-code-lines="1" data-code-annotation="1">Arranges the 4 plots into a 2 x 2 matrix</span>
+</dd>
+<dt data-target-cell="annotated-cell-20" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-20" data-code-lines="2" data-code-annotation="2">Produces 4 diagnostic plots from the results stored in the <code>regr_fit</code> object</span>
+</dd>
+</dl>
 </div>
-<p>Run command and then hit return by the prompt in the Console. Press return 4 times and the 4 graphs will appear in sequence.</p>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the diagnostoc plots">
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the diagnostic plots">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click to see the diagnostoc plots
+Click to see the diagnostic plots
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1458,33 +1470,12 @@ Click to see the diagnostoc plots
 </figure>
 </div>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Stats_Workshop3_files/figure-html/regr.diagn1-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Stats_Workshop3_files/figure-html/regr.diagn1-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Stats_Workshop3_files/figure-html/regr.diagn1-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
 </div>
 <ul>
 <li><em>Residuals vs.&nbsp;Fitted</em> - should be even scatter of points around 0. Residuals should have no pattern in relation to predicted (fitted) values. Fitted line should be reasonably close to straight flat line (residuals all about the same = homoscedasticity). Here, some departure, so might not be quite linear.</li>
 <li><em>Normal Q-Q</em> - diag line = normal distribution of residuals. The points should be close to the diagonal line.</li>
 <li><em>Scale-Location</em> - line should be horizontal flat. Similar to Residuals vs Fitted.</li>
-<li><em>Residuals vs.&nbsp;Leverage</em> - dotted lines = Cook’s Distance. If any points are near or cross the dotted lines, they have strong influence on the model.</li>
+<li><em>Residuals vs.&nbsp;Leverage</em> - dotted lines = Cook’s Distance. If any points are near or cross the dotted lines, they have a strong influence on the model.</li>
 </ul>
 </div>
 </div>
@@ -1746,8 +1737,8 @@ Click to see the output
 </div>
 <p><br> <br> <strong>3. Explore the data</strong><br> a) Matrix of correlation coefficients, scatter plots and distributions</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mlr <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mlr <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the matrix">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
@@ -1776,8 +1767,8 @@ Click to see the matrix
 </div>
 <p><br> b) Test that the dependent variable (the one to be predicted; Triglycerides) is normally distributed</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mlr <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mlr <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro_test</span>(Triglycerides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the output">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
@@ -2000,9 +1991,22 @@ Click to see the rmse value
 </div>
 </div>
 <p><br> <br></p>
-<p><strong><code>b)</code> Diagnostic plots for the best selected model, <code>Triglycerides = -48.46+1.63(LDL)</code></strong>.<br> The results for the selected model has been stored in an object called <code>model.FINAL</code>; run the following script and then hit return at the prompt in the Console.<br> Hitting return 4 times will result in the 4 graphs being shown.</p>
+<p><strong><code>b)</code> Diagnostic plots for the best selected model, <code>Triglycerides = -48.46+1.63(LDL)</code></strong>.<br> The results for the selected model has been stored in an object called <code>model.FINAL</code>; running the following script will produce 4 diagnostic plots.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model.FINAL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-33"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-33" data-target-annotation="1">1</button><span id="annotated-cell-33-1" class="code-annotation-target"><a href="#annotated-cell-33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-33" data-target-annotation="2">2</button><span id="annotated-cell-33-2" class="code-annotation-target"><a href="#annotated-cell-33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model.FINAL)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-33" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-33" data-code-lines="1" data-code-annotation="1">Arranges the 4 plots into a 2x2 matrix</span>
+</dd>
+<dt data-target-cell="annotated-cell-33" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-33" data-code-lines="2" data-code-annotation="2">Creates the four diagnostic plots from the results in the <code>model.FINAL</code> object</span>
+</dd>
+</dl>
+</div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the diagnostic plots (there is a brief description of each at the bottom)">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
@@ -2024,41 +2028,20 @@ Click to see the diagnostic plots (there is a brief description of each at the b
 </figure>
 </div>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Stats_Workshop3_files/figure-html/mlr.diagn1-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Stats_Workshop3_files/figure-html/mlr.diagn1-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Stats_Workshop3_files/figure-html/mlr.diagn1-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
 </div>
 <ul>
-<li><em>Residuals vs.&nbsp;Fitted</em> - should be even scatter of points around 0. Residuals should have no pattern in relation to predicted (fitted) values. Fitted line should be reasonably close to straight flat line (residuals all about the same = homoscedasticity). Here, some departure, so might not be quite linear.<br> Rows 1, 12 and 17 have the 3 highest residuals.</li>
+<li><em>Residuals vs.&nbsp;Fitted</em> - should be even scatter of points around 0. Residuals should have no pattern in relation to predicted (fitted) values. Fitted line should be reasonably close to straight flat line (residuals all about the same = homoscedasticity). Here, some departure, so might not be quite linear.<br> Rows 9, 12 and 17 have the 3 highest residuals.</li>
 <li><em>Normal Q-Q</em> - diag line = normal distribution of residuals. The points should be close to the diagonal line.</li>
 <li><em>Scale-Location</em> - line should be horizontal flat. Similar to Residuals vs Fitted.</li>
-<li><em>Residuals vs.&nbsp;Leverage</em> - dotted lines = Cook’s Distance. If any points near or cross dotted lines, have strong influence.</li>
+<li><em>Residuals vs.&nbsp;Leverage</em> - dotted lines = Cook’s Distance. If any points are near or cross the dotted lines, they have a strong influence.</li>
 </ul>
 </div>
 </div>
 </div>
 <p><br> <br> <strong><code>c)</code> Examine the selected regression model for any data points that have a strong influence on the regression analysis.</strong><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>inflmlr <span class="ot">&lt;-</span> model.FINAL <span class="sc">|&gt;</span> <span class="fu">influence.measures</span>()</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inflmlr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>inflmlr <span class="ot">&lt;-</span> model.FINAL <span class="sc">|&gt;</span> <span class="fu">influence.measures</span>()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inflmlr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This prints out possible influential predictor values.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Click to see the influence statistics (there is a brief description of each at the bottom)">
