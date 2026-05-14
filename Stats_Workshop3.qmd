@@ -24,9 +24,9 @@ library(knitr)
 
 This workshop introduces you to analysing:
 
--   Correlations: analysing the strength of an association;<br>
--   Linear Regression for two variables: analyzing the relationship or influence of one variable (predictor or independent) on another (dependent);<br>
--   Multiple Regression: analyzing the influence of more than one predictor variable on a dependent variable.
+- Correlations: analysing the strength of an association;<br>
+- Linear Regression for two variables: analyzing the relationship or influence of one variable (predictor or independent) on another (dependent);<br>
+- Multiple Regression: analyzing the influence of more than one predictor variable on a dependent variable.
 
 First, open RStudio and a new R Script file. Load the packages that you will be using:
 
@@ -59,15 +59,15 @@ This example analyzes the strength of an association between two variables measu
 
 ###### **A. CORRELATION OF TWO VARIABLES**
 
-<br> **1. Download the Excel file `Correlation_2_var_data.xlsx`** from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).<br>
+<br> **1. Download the Excel file** [Correlation_2_var_data.xlsx](https://kingstonuniversity-my.sharepoint.com/:x:/g/personal/ku11417_kingston_ac_uk/IQAht2S0qDi7SIt9B8cipFLvAaidXJJuirncH1llJuqv1Kk?e=4jzuvc) from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).<br>
 
 ::: {.callout-note collapse="true" title="Upload excel file to RStudio Cloud" icon="true"}
--   Check that the data in the file is 'tidy'
--   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
+- Check that the data in the file is 'tidy'
+- Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
 
 ![Uploading a file to RStudio](upload%20corr2.png){.lightbox width="70%"}
 
--   In RStudio, locate the file and set the folder location as your working directory.
+- In RStudio, locate the file and set the folder location as your working directory.
 :::
 
 <br> **2. Import the file to RStudio and store it as a dataframe called `corr2var`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
@@ -211,15 +211,15 @@ Here, the correlation coefficient r = 0.99, so a very strong correlation (almost
 
 ###### **B. CORRELATION OF THREE VARIABLES**
 
-<br> **1. Download the Excel file `Correlation_3_var_data.xlsx`** from Canvas and save it to the same folder as above so that it is in your working directory (either in RStudio Cloud or in RStudio on your own laptop).
+<br> **1. Download the Excel file** [Correlation_3_var_data.xlsx](https://kingstonuniversity-my.sharepoint.com/:x:/g/personal/ku11417_kingston_ac_uk/IQCtW6wyYpOITIdFFV5qAIrqAc2yGW6Eu4s6K5eKHMynQNs?e=6oweqg) from Canvas and save it to the same folder as above so that it is in your working directory (either in RStudio Cloud or in RStudio on your own laptop).
 
 ::: {.callout-note collapse="true" title="Upload excel file to RStudio Cloud" icon="true"}
--   Check that the data in the file is 'tidy'
--   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
+- Check that the data in the file is 'tidy'
+- Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
 
 ![Uploading a file to RStudio](upload%20corr3.png){.lightbox width="70%"}
 
--   In RStudio, locate the file and set the folder location as your working directory.
+- In RStudio, locate the file and set the folder location as your working directory.
 :::
 
 <br><br> **2. Import the file to RStudio and store it as a dataframe called `corr3var`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. All three columns contain numeric which is what we want.
@@ -397,15 +397,15 @@ The larger the circle, the stronger the correlation (nearer to +1 or -1). Blue i
 This example analyses the nature of the relationship between Triglycerides and LDL Cholesterol, and to see if we can predict Triglyceride values (the dependent variable) from the LDL (the independent or predictor variable). It uses regression analysis to create an equation for a predicted linear relationship and analyses how good it is as an equation to predict Triglycerides from LDL.
 :::
 
-**1. You will be using the same data example as for the bivariate correlation example. If you have not already downloaded the data file, download the Excel file `Correlation_2_var_data.xlsx` from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).**
+**1. You will be using the same data example as for the bivariate correlation example. If you have not already downloaded the data file, download the Excel file** [Correlation_2_var_data.xlsx](https://kingstonuniversity-my.sharepoint.com/:x:/g/personal/ku11417_kingston_ac_uk/IQAht2S0qDi7SIt9B8cipFLvAaidXJJuirncH1llJuqv1Kk?e=aIk35o) **from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).**
 
 ::: {.callout-note collapse="true" title="Upload excel file to RStudio Cloud" icon="true"}
--   Check that the data in the file is 'tidy'
--   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
+- Check that the data in the file is 'tidy'
+- Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
 
 ![Uploading a file to RStudio](upload%20corr2.png){.lightbox width="70%"}
 
--   In RStudio, locate the file and set the folder location as your working directory.
+- In RStudio, locate the file and set the folder location as your working directory.
 :::
 
 <br> **2. Import the file to RStudio and store it as a dataframe called `lin_regr`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
@@ -529,11 +529,11 @@ regr_fit |>
   summary()
 ```
 
--   Residuals = actual value - predicted value. A negative value means the actual value was lower than predicted; a positive actual is higher than predicted. Median should be close to 0.
--   The equation of the line (using the coefficients) is: **Triglycerides = -48.46 + 1.63(LDL Cholesterol)**
--   **Adj R-squared = 0.979**: the model accounts for 97.9% of the variation of Triglycerides.
--   F-statistic model analysis: P=5.91x10^-16^, so the model has a highly statistically significant fit to the data.<br> <br> *Note*:<br>
--   The **effect size** is the correlation coefficient, r. This is just the square root of the Adj R^2^ value.
+- Residuals = actual value - predicted value. A negative value means the actual value was lower than predicted; a positive actual is higher than predicted. Median should be close to 0.
+- The equation of the line (using the coefficients) is: **Triglycerides = -48.46 + 1.63(LDL Cholesterol)**
+- **Adj R-squared = 0.979**: the model accounts for 97.9% of the variation of Triglycerides.
+- F-statistic model analysis: P=5.91x10^-16^, so the model has a highly statistically significant fit to the data.<br> <br> *Note*:<br>
+- The **effect size** is the correlation coefficient, r. This is just the square root of the Adj R^2^ value.
 
 ```{r}
 #| label: rcoeff
@@ -569,6 +569,7 @@ st_resid |>
   labs(title = "Histogram of standardised residuals",
        x = "Standardised residuals")
 ```
+
 1.  Send the standardised residuals (st_resid) to the ggplot function
 2.  Produce a histogram with blue bars and black outline
 
@@ -585,7 +586,7 @@ st_resid |>
 ```
 :::
 
-<br>  Use the Shapiro Wilk test to see if the standardised residuals are normally distributed:
+<br> Use the Shapiro Wilk test to see if the standardised residuals are normally distributed:
 
 ```{r}
 #| label: stresid.nor
@@ -617,8 +618,9 @@ So here the standardised residuals are normally distributed (P\>0.05)
 par(mfrow = c(2, 2))  #<1>
 plot(regr_fit)  #<2>
 ```
-1. Arranges the 4 plots into a 2 x 2 matrix
-2. Produces 4 diagnostic plots from the results stored in the `regr_fit` object
+
+1.  Arranges the 4 plots into a 2 x 2 matrix
+2.  Produces 4 diagnostic plots from the results stored in the `regr_fit` object
 
 ::: {.callout-note collapse="true" title="Click to see the diagnostic plots" icon="false"}
 ```{r}
@@ -629,10 +631,10 @@ par(mfrow = c(2, 2))
 plot(regr_fit)
 ```
 
--   *Residuals vs. Fitted* - should be even scatter of points around 0. Residuals should have no pattern in relation to predicted (fitted) values. Fitted line should be reasonably close to straight flat line (residuals all about the same = homoscedasticity). Here, some departure, so might not be quite linear.
--   *Normal Q-Q* - diag line = normal distribution of residuals. The points should be close to the diagonal line.
--   *Scale-Location* - line should be horizontal flat. Similar to Residuals vs Fitted.
--   *Residuals vs. Leverage* - dotted lines = Cook's Distance. If any points are near or cross the dotted lines, they have a strong influence on the model.
+- *Residuals vs. Fitted* - should be even scatter of points around 0. Residuals should have no pattern in relation to predicted (fitted) values. Fitted line should be reasonably close to straight flat line (residuals all about the same = homoscedasticity). Here, some departure, so might not be quite linear.
+- *Normal Q-Q* - diag line = normal distribution of residuals. The points should be close to the diagonal line.
+- *Scale-Location* - line should be horizontal flat. Similar to Residuals vs Fitted.
+- *Residuals vs. Leverage* - dotted lines = Cook's Distance. If any points are near or cross the dotted lines, they have a strong influence on the model.
 :::
 
 <br><br> `c)` Examine data for any data points that have a strong influence on the regression analysis.<br>
@@ -659,11 +661,11 @@ summary(inflm)
 
 This prints out possible influential predictor values (here they are the data in rows 12, 18 and 19).
 
--   hat = weight (Levereage) of each value on predicted values. Ranges 0 (no influence) - 1 (100% influence). Any value \> 2.5x(no. of predictors+1)/number of values should be looked at as having strong influence. Here = 2.5x(2/19) = 0.26
--   Cook's distance = measure of overall influence of a value on the model. Value \>1 may have large influence.
--   DFFit = difference on predicted values when a case is included and excluded. Small value = low influence.
--   dfb (DFBeta) = again measures difference in each estimate (intercept and slope) with and without the predictor value. Small value = low influence (dfb.1 is the effect on the intercept, dfb.LDL is effect on the predictor)
--   Covariance ratio (cov.r) = role of observation on precision of estimate. If \> 1, improves precision; \<1 reduces precision<br> <br> <br>
+- hat = weight (Levereage) of each value on predicted values. Ranges 0 (no influence) - 1 (100% influence). Any value \> 2.5x(no. of predictors+1)/number of values should be looked at as having strong influence. Here = 2.5x(2/19) = 0.26
+- Cook's distance = measure of overall influence of a value on the model. Value \>1 may have large influence.
+- DFFit = difference on predicted values when a case is included and excluded. Small value = low influence.
+- dfb (DFBeta) = again measures difference in each estimate (intercept and slope) with and without the predictor value. Small value = low influence (dfb.1 is the effect on the intercept, dfb.LDL is effect on the predictor)
+- Covariance ratio (cov.r) = role of observation on precision of estimate. If \> 1, improves precision; \<1 reduces precision<br> <br> <br>
 :::
 
 <br><br> **6. Re-do the scatter plot but add the equation and R-square**<br> Scatter plot with fitted line<br>
@@ -707,15 +709,15 @@ lin_regr |>
 This example analyses the nature of the relationship between Triglycerides and more than one predictor: LDL Cholesterol, HDL Cholesterol and Glucose to see if they can be used together to accurately predict Triglyceride levels. It uses regression analysis to analyse which predictors should be included in the model to predict Triglycerides and to create an equation for the best model.
 :::
 
-<br> **1. Download the Excel file `Mult_Regr_data.xlsx`** from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).
+<br> **1. Download the Excel file** [Mult_Regr_data.xlsx](https://kingstonuniversity-my.sharepoint.com/:x:/g/personal/ku11417_kingston_ac_uk/IQBxIHBUIsXdSr1w2OHg-9IdAUtxJQKP2ZZMjphLrjjeOK0?e=C6bEXl) from Canvas and save it to a folder that you will use as your working directory (either in RStudio Cloud or in RStudio on your own laptop).
 
 ::: {.callout-note collapse="true" title="Upload excel file to RStudio Cloud" icon="true"}
--   Check that the data in the file is 'tidy'
--   Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
+- Check that the data in the file is 'tidy'
+- Upload it to RStudio Cloud, saving it to a folder for this Statistics Workshop 3 session (*NB* If you are using RStudio on your own laptop, simply save the excel file to a relevant folder on your laptop).
 
 ![Uploading a file to RStudio](upload%20mult%20regr.png){.lightbox width="70%"}
 
--   In RStudio, locate the file and set the folder location as your working directory.
+- In RStudio, locate the file and set the folder location as your working directory.
 :::
 
 <br> **2. Import the file to RStudio and store it as a dataframe called `mlr`.**<br> The `head()` function shows us the first 6 rows.<br> The `summarise_all(class)` function shows us what type of data is stored in the dataframe. Both are numeric which is what we want.
@@ -866,8 +868,8 @@ model.FINAL |>
 
 and the final equation of the model is: <br><br> `Triglycerides = -48.46 + 1.63(LDL)`
 
--   R^2^ = 0.979; the model explains 97.9% of the variation in the dependent data
--   The model fits the data (*ie* the predictors explain the variation in the dependent variable) with high statistical significance; Model fit P \< 5.91x10^-16^<br> <br> <br>
+- R^2^ = 0.979; the model explains 97.9% of the variation in the dependent data
+- The model fits the data (*ie* the predictors explain the variation in the dependent variable) with high statistical significance; Model fit P \< 5.91x10^-16^<br> <br> <br>
 
 **5. Diagnostics**<br>
 
@@ -910,8 +912,9 @@ rmseLDL
 par(mfrow = c(2, 2))  #<1>
 plot(model.FINAL) #<2>
 ```
-1. Arranges the 4 plots into a 2x2 matrix
-2. Creates the four diagnostic plots from the results in the `model.FINAL` object
+
+1.  Arranges the 4 plots into a 2x2 matrix
+2.  Creates the four diagnostic plots from the results in the `model.FINAL` object
 
 ::: {.callout-note collapse="true" title="Click to see the diagnostic plots (there is a brief description of each at the bottom)" icon="false"}
 ```{r}
@@ -922,10 +925,10 @@ par(mfrow = c(2, 2))
 plot(model.FINAL)
 ```
 
--   *Residuals vs. Fitted* - should be even scatter of points around 0. Residuals should have no pattern in relation to predicted (fitted) values. Fitted line should be reasonably close to straight flat line (residuals all about the same = homoscedasticity). Here, some departure, so might not be quite linear.<br> Rows 9, 12 and 17 have the 3 highest residuals.
--   *Normal Q-Q* - diag line = normal distribution of residuals. The points should be close to the diagonal line.
--   *Scale-Location* - line should be horizontal flat. Similar to Residuals vs Fitted.
--   *Residuals vs. Leverage* - dotted lines = Cook's Distance. If any points are near or cross the dotted lines, they have a strong influence.
+- *Residuals vs. Fitted* - should be even scatter of points around 0. Residuals should have no pattern in relation to predicted (fitted) values. Fitted line should be reasonably close to straight flat line (residuals all about the same = homoscedasticity). Here, some departure, so might not be quite linear.<br> Rows 9, 12 and 17 have the 3 highest residuals.
+- *Normal Q-Q* - diag line = normal distribution of residuals. The points should be close to the diagonal line.
+- *Scale-Location* - line should be horizontal flat. Similar to Residuals vs Fitted.
+- *Residuals vs. Leverage* - dotted lines = Cook's Distance. If any points are near or cross the dotted lines, they have a strong influence.
 :::
 
 <br> <br> **`c)` Examine the selected regression model for any data points that have a strong influence on the regression analysis.**<br>
@@ -949,10 +952,10 @@ inflmlr <- model.FINAL |> influence.measures()
 summary(inflmlr)
 ```
 
--   hat = weight (Levereage) of each value on predicted values. Ranges 0 (no influence) - 1 (100% influence). Any value \> 2.5x(no. of predictors+1)/(number of values) should be looked at as having strong influence. Here = \> 2.5x(2/19) = 0.26
--   Cook's distance = measure of overall influence of a value on the model. Value \>1 may have large influence.
--   DFFit = difference on predicted values when a case is included and excluded. Small value = low influence.
--   dfb (DFBeta) = again measures difference in each estimate (intercept and slope) with and without the predictor value. Small value = low influence (dfb.1 is the effect on the intercept, dfb.LDL is effect on the predictor)
--   Covariance ratio (cov.r) = role of observation on precision of estimate. If \> 1, improves precision; \<1 reduces precision
+- hat = weight (Levereage) of each value on predicted values. Ranges 0 (no influence) - 1 (100% influence). Any value \> 2.5x(no. of predictors+1)/(number of values) should be looked at as having strong influence. Here = \> 2.5x(2/19) = 0.26
+- Cook's distance = measure of overall influence of a value on the model. Value \>1 may have large influence.
+- DFFit = difference on predicted values when a case is included and excluded. Small value = low influence.
+- dfb (DFBeta) = again measures difference in each estimate (intercept and slope) with and without the predictor value. Small value = low influence (dfb.1 is the effect on the intercept, dfb.LDL is effect on the predictor)
+- Covariance ratio (cov.r) = role of observation on precision of estimate. If \> 1, improves precision; \<1 reduces precision
 :::
 ::::::::::::::::::::::::::::::::::::::
